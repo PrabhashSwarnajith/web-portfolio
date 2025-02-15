@@ -50,7 +50,7 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
 
   useEffect(() => {
     AOS.init({
-      duration: 1000,
+      duration: 0.8,
       once: false,
       mirror: false,
     });
@@ -60,7 +60,7 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
       setTimeout(() => {
         onLoadingComplete?.();
       }, 1000);
-    }, 4000);
+    }, 5000);
     
     return () => clearTimeout(timer);
   }, [onLoadingComplete]);
@@ -71,7 +71,7 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
       scale: 1.1,
       filter: "blur(10px)",
       transition: {
-        duration: 0.8,
+        duration: 0.9,
         ease: "easeInOut",
         when: "beforeChildren",
         staggerChildren: 0.1
@@ -152,7 +152,7 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
                 data-aos-delay="1200"
               >
                 <a
-                  href="https://www.eki.my.id"
+                  href="https://www.prabhashswarnajith.me"
                   className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-full relative group hover:scale-105 transition-transform duration-300"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -161,7 +161,7 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
                   <div className="relative flex items-center gap-2 text-lg sm:text-xl md:text-2xl">
                     <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600" />
                     <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                      <TypewriterEffect text="www.eki.my.id" />
+                      <TypewriterEffect text="www.alphacode.dev" />
                     </span>
                   </div>
                 </a>
