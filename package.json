@@ -2,6 +2,7 @@
   "name": "web-portofolio",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://PrabhashSwarnajith.github.io/web-portfolio/",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-     "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d build"
+
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
