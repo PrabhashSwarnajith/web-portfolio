@@ -15,11 +15,7 @@ const certificates = [
       Title: "Java Programming and Software Engineering Fundamentals",
       Img: java,
     },
-    {
-      id: 4,
-      Title: "Java Programming and Software Engineering Fundamentals",
-      Img: java,
-    }
+   
   ];
   
   export default certificates;
