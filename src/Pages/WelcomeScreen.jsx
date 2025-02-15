@@ -6,7 +6,7 @@ import 'aos/dist/aos.css';
 
 const TypewriterEffect = ({ text }) => {
   const [displayText, setDisplayText] = useState('');
-  
+
   useEffect(() => {
     let index = 0;
     const timer = setInterval(() => {
@@ -16,8 +16,8 @@ const TypewriterEffect = ({ text }) => {
       } else {
         clearInterval(timer);
       }
-    }, 260);
-    
+    }, 50); // Slightly faster typing effect
+
     return () => clearInterval(timer);
   }, [text]);
 
@@ -50,18 +50,17 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
 
   useEffect(() => {
     AOS.init({
-      duration: 0.8,
+      duration: 800,
       once: false,
       mirror: false,
     });
-
     const timer = setTimeout(() => {
       setIsLoading(false);
       setTimeout(() => {
         onLoadingComplete?.();
       }, 1000);
-    }, 5000);
-    
+    }, 4000); // Reduced loading time slightly
+
     return () => clearTimeout(timer);
   }, [onLoadingComplete]);
 
@@ -69,14 +68,14 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
     exit: {
       opacity: 0,
       scale: 1.1,
-      filter: "blur(10px)",
+      filter: 'blur(10px)',
       transition: {
-        duration: 0.9,
-        ease: "easeInOut",
-        when: "beforeChildren",
-        staggerChildren: 0.1
-      }
-    }
+        duration: 0.6, // Smoother exit animation
+        ease: 'easeInOut',
+        when: 'beforeChildren',
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const childVariants = {
@@ -84,10 +83,10 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
       y: -20,
       opacity: 0,
       transition: {
-        duration: 0.4,
-        ease: "easeInOut"
-      }
-    }
+        duration: 0.3, // Faster child exit animation
+        ease: 'easeInOut',
+      },
+    },
   };
 
   return (
@@ -101,11 +100,11 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
           variants={containerVariants}
         >
           <BackgroundEffect />
-          
+
           <div className="relative min-h-screen flex items-center justify-center px-4">
             <div className="w-full max-w-4xl mx-auto">
               {/* Icons */}
-              <motion.div 
+              <motion.div
                 className="flex justify-center gap-3 sm:gap-4 md:gap-8 mb-6 sm:mb-8 md:mb-12"
                 variants={childVariants}
               >
@@ -115,9 +114,8 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
                   </div>
                 ))}
               </motion.div>
-
               {/* Welcome Text */}
-              <motion.div 
+              <motion.div
                 className="text-center mb-6 sm:mb-8 md:mb-12"
                 variants={childVariants}
               >
@@ -143,16 +141,15 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
                   </div>
                 </h1>
               </motion.div>
-
               {/* Website Link */}
-              <motion.div 
+              <motion.div
                 className="text-center"
                 variants={childVariants}
                 data-aos="fade-up"
                 data-aos-delay="1200"
               >
                 <a
-                  href="https://www.prabhashswarnajith.me"
+                  href="https://www.prabhashswarnajith.me" // Updated external link
                   className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-full relative group hover:scale-105 transition-transform duration-300"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -161,7 +158,7 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
                   <div className="relative flex items-center gap-2 text-lg sm:text-xl md:text-2xl">
                     <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600" />
                     <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                      <TypewriterEffect text="www.alphacode.dev" />
+                      <TypewriterEffect text="www.prabhashswarnajith.me" /> {/* Updated text */}
                     </span>
                   </div>
                 </a>
