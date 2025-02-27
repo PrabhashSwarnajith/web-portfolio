@@ -68,7 +68,7 @@ function App() {
   const [showWelcome, setShowWelcome] = useState(true);
 
   return (
-    <BrowserRouter
+    <BrowserRouter basename="/web-portfolio"
       future={{
         v7_startTransition: true,
         v7_relativeSplatPath: true,
