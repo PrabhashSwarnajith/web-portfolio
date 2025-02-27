@@ -33,8 +33,8 @@ const LandingPage = ({ showWelcome, setShowWelcome }) => {
               <hr className="my-3 border-gray-400 opacity-15 sm:mx-auto lg:my-6 text-center" />
               <span className="block text-sm pb-4 text-gray-500 text-center dark:text-gray-400">
                 © 2024{" "}
-                <a  className="hover:underline">
-                AlphaCode™
+                <a className="hover:underline">
+                  AlphaCode™
                 </a>
                 . All Rights Reserved.
               </span>
@@ -54,8 +54,8 @@ const ProjectPageLayout = () => (
         <hr className="my-3 border-gray-400 opacity-15 sm:mx-auto lg:my-6 text-center" />
         <span className="block text-sm pb-4 text-gray-500 text-center dark:text-gray-400">
           © 2024{" "}
-          <a  className="hover:underline">
-          AlphaCode™
+          <a className="hover:underline">
+            AlphaCode™
           </a>
           . All Rights Reserved.
         </span>
@@ -68,7 +68,12 @@ function App() {
   const [showWelcome, setShowWelcome] = useState(true);
 
   return (
-    <BrowserRouter  basename="/web-portfolio">
+    <BrowserRouter
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
       <Routes>
         <Route path="/" element={<LandingPage showWelcome={showWelcome} setShowWelcome={setShowWelcome} />} />
         <Route path="/project/:id" element={<ProjectPageLayout />} />
