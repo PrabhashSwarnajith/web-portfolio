@@ -3,7 +3,7 @@ import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, UserCheck } from 
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import profile from "../assets/Photo.jpg"
-import cv from "../assets/Prabhash-Swarnajith-CV.pdf"
+import cv from "../assets/Prabhash Swarnajith - Resume.pdf"
 
 // Memoized Components
 const Header = memo(() => (
