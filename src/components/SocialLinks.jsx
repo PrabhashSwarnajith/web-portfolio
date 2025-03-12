@@ -41,7 +41,7 @@ const socialLinks = [
   {
     name: "Instagram",
     displayName: "Instagram",
-    subText: "@ekizr_",
+    subText: "@prabhash_swarnajith",
     icon: Instagram,
     url: "https://www.instagram.com/prabhash_swarnajith/",
     color: "#E4405F",
