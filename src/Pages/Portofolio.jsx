@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback} from "react";
-import PropTypes from "prop-types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from 'swiper/modules';
 import { useTheme } from "@mui/material/styles";
@@ -88,12 +87,6 @@ function TabPanel({ children, value, index, ...other }) {
     </div>
   );
 }
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
 
 function a11yProps(index) {
   return {
@@ -271,6 +264,8 @@ export default function FullWidthTabs() {
                   Description={project.Description}
                   Link={project.Link}
                   id={project.id}
+                  TechStack={project.TechStack || []}
+                  Github={project.Github || ""}
                 />
               </div>
             ))}

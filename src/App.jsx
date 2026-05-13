@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import "./index.css";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
+import Skills from "./Pages/Skills";
+import Experience from "./Pages/Experience";
+import Education from "./Pages/Education";
 import AnimatedBackground from "./components/Background";
 import Navbar from "./components/Navbar";
 import Portofolio from "./Pages/Portofolio";
@@ -10,6 +13,21 @@ import ContactPage from "./Pages/Contact";
 import ProjectDetails from "./components/ProjectDetail";
 import WelcomeScreen from "./Pages/WelcomeScreen";
 import { AnimatePresence } from 'framer-motion';
+
+const Footer = () => (
+  <footer className="border-t border-white/5">
+    <div className="text-center py-6 px-4">
+      <p className="text-sm text-gray-500">
+        © {new Date().getFullYear()}{" "}
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7] font-medium">
+          Prabhash Swarnajith
+        </span>
+        . All Rights Reserved.
+      </p>
+      <p className="text-xs text-gray-600 mt-1">Built with React &amp; Tailwind CSS</p>
+    </div>
+  </footer>
+);
 
 const LandingPage = ({ showWelcome, setShowWelcome }) => {
   return (
@@ -26,20 +44,12 @@ const LandingPage = ({ showWelcome, setShowWelcome }) => {
           <AnimatedBackground />
           <Home />
           <About />
+          <Skills />
+          <Experience />
+          <Education />
           <Portofolio />
           <ContactPage />
-          <footer>
-            <center>
-              <hr className="my-3 border-gray-400 opacity-15 sm:mx-auto lg:my-6 text-center" />
-              <span className="block text-sm pb-4 text-gray-500 text-center dark:text-gray-400">
-                © 2024{" "}
-                <a className="hover:underline">
-                  AlphaCode™
-                </a>
-                . All Rights Reserved.
-              </span>
-            </center>
-          </footer>
+          <Footer />
         </>
       )}
     </>
@@ -49,18 +59,7 @@ const LandingPage = ({ showWelcome, setShowWelcome }) => {
 const ProjectPageLayout = () => (
   <>
     <ProjectDetails />
-    <footer>
-      <center>
-        <hr className="my-3 border-gray-400 opacity-15 sm:mx-auto lg:my-6 text-center" />
-        <span className="block text-sm pb-4 text-gray-500 text-center dark:text-gray-400">
-          © 2024{" "}
-          <a className="hover:underline">
-            AlphaCode™
-          </a>
-          . All Rights Reserved.
-        </span>
-      </center>
-    </footer>
+    <Footer />
   </>
 );
 
