@@ -18,6 +18,24 @@ const experiences = [
     ],
     tech: ["React", "ASP.NET Core (.NET 8)", "Microsoft Graph API", "OpenAI API", "SignalR", "n8n", "Docker", "JWT", "MSAL"],
   },
+  {
+    id: 2,
+    role: "Full Stack Developer",
+    company: "ICT Option Private Limited",
+    location: "Colombo, Sri Lanka · Hybrid",
+    period: "Feb 2025 – Present",
+    type: "Part-time",
+    description:
+      "Delivering secure and scalable software solutions across 20+ real-world projects for clients, specializing in full-stack web development, backend API design, and database optimization.",
+    achievements: [
+      "Worked on 20+ real-world client projects delivering production-ready full-stack applications",
+      "Built scalable backend APIs and services using Spring Boot, Node.js, and Python",
+      "Developed frontend interfaces with React.js and Next.js with focus on performance and UX",
+      "Optimized database queries and schema designs across MySQL and MongoDB",
+      "Applied best practices in security, authentication, and code quality across all projects",
+    ],
+    tech: ["Spring Boot", "Node.js", "React.js", "Next.js", "Python", "MySQL", "MongoDB"],
+  },
 ];
 
 export default experiences;

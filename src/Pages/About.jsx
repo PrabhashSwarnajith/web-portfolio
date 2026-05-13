@@ -119,7 +119,11 @@ const AboutPage = () => {
               <div className="flex flex-wrap gap-2 mb-4">
                 <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold tracking-widest uppercase">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  Currently @ CW Cloud Solutions Pty Ltd
+                  Intern @ CW Cloud Solutions
+                </span>
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/25 bg-violet-500/8 text-violet-300 text-xs font-semibold tracking-widest uppercase">
+                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
+                  Full Stack Dev @ ICT Option
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-purple-500/25 bg-purple-500/8 text-purple-300 text-xs font-semibold tracking-widest uppercase">
                   SLIIT · ICT Specialization

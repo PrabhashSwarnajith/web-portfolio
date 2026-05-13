@@ -131,11 +131,17 @@ const Home = () => {
             {/* ── Left column ── */}
             <div className="w-full lg:w-1/2 space-y-6" data-aos="fade-right" data-aos-delay="100">
 
-              {/* Company badge */}
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-indigo-500/20 bg-indigo-500/[0.07] text-indigo-300 text-[11px] font-semibold tracking-[0.12em] uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Software Engineering Intern · CW Cloud Solutions
-              </span>
+              {/* Company badges */}
+              <div className="flex flex-wrap gap-2">
+                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-indigo-500/20 bg-indigo-500/[0.07] text-indigo-300 text-[11px] font-semibold tracking-[0.12em] uppercase">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  SE Intern · CW Cloud Solutions
+                </span>
+                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-violet-500/20 bg-violet-500/[0.07] text-violet-300 text-[11px] font-semibold tracking-[0.12em] uppercase">
+                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
+                  Full Stack Dev · ICT Option
+                </span>
+              </div>
 
               {/* Name */}
               <div className="space-y-1">
