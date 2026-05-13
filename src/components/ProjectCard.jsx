@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ExternalLink, ArrowRight, Github } from "lucide-react";
 
-const ProjectCard = ({ Img, Title, Description, Link: ProjectLink, id, TechStack = [], Github: GithubLink }) => {
+const ProjectCard = ({ Img, Title, Description, Link: ProjectLink, id, TechStack = [], Github: GithubLink, badge }) => {
   const handleLiveDemo = (e) => {
     if (!ProjectLink) {
       e.preventDefault();
@@ -58,6 +58,11 @@ const ProjectCard = ({ Img, Title, Description, Link: ProjectLink, id, TechStack
           </div>
 
           <div className="flex-1 flex flex-col gap-3">
+            {badge && (
+              <span className="self-start text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-indigo-300">
+                {badge}
+              </span>
+            )}
             <h3 className="text-lg font-bold bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-text text-transparent leading-tight">
               {Title}
             </h3>

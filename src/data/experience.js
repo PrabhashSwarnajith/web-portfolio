@@ -1,19 +1,22 @@
 const experiences = [
   {
     id: 1,
-    role: "Full-Stack Developer",
-    company: "Freelance & Personal Projects",
+    role: "Software Engineering Intern",
+    company: "CW Cloud Solutions Pty Ltd",
     location: "Remote",
-    period: "Nov 2023 – Present",
-    type: "Freelance",
+    period: "May 2025 – Present",
+    type: "Internship",
     description:
-      "Designing and developing full-stack web applications using Spring Boot and React.js, delivering scalable and responsive digital solutions with modern UI/UX design principles.",
+      "Working on enterprise-grade full-stack applications, AI-powered productivity tools, and intelligent workflow automation systems for a cloud solutions company.",
     achievements: [
-      "Built an Appointment Booking System with role-based authentication, REST APIs, and real-time scheduling using Spring Boot and React.js",
-      "Developed FitFusion — a fitness-focused social media platform featuring Google OAuth2, workout tracking, and community engagement",
-      "Designed and launched a personal portfolio website with modern animations, AOS scroll effects, and full responsiveness",
+      "Built an AI-powered Outlook Office Add-in with Microsoft Graph API, MSAL, and OpenAI — enabling email summarization, smart replies, and CRM insights inside Outlook",
+      "Developed full-stack enterprise applications using React and ASP.NET Core (.NET 8), improving internal workflow efficiency",
+      "Designed and implemented secure REST APIs with MSAL authentication and JWT-based authorization",
+      "Implemented real-time communication using SignalR, supporting live updates and messaging across clients",
+      "Automated business workflows using n8n, significantly reducing manual processing time",
+      "Containerized applications with Docker for consistent, reproducible deployments across environments",
     ],
-    tech: ["Spring Boot", "React.js", "MongoDB", "MySQL", "Tailwind CSS", "Firebase", "Node.js"],
+    tech: ["React", "ASP.NET Core (.NET 8)", "Microsoft Graph API", "OpenAI API", "SignalR", "n8n", "Docker", "JWT", "MSAL"],
   },
 ];
 

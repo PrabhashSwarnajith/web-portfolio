@@ -266,6 +266,7 @@ export default function FullWidthTabs() {
                   id={project.id}
                   TechStack={project.TechStack || []}
                   Github={project.Github || ""}
+                  badge={project.badge}
                 />
               </div>
             ))}
