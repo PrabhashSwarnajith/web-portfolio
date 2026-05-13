@@ -1,4 +1,4 @@
-import java from "../assets/certicates/java.png";
+import java from "../assets/certicates/Java.png";
 const certificates = [
     {
       id: 1,
