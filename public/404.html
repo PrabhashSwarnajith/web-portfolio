@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Prabhash Swarnajith - Portfolio</title>
+    <script>
+      // GitHub Pages SPA redirect: store the path and redirect to index
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        '/web-portfolio/' +
+        '?p=' + encodeURIComponent(l.pathname.slice('/web-portfolio/'.length) + l.search) +
+        (l.hash || '')
+      );
+    </script>
+  </head>
+  <body></body>
+</html>

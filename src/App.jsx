@@ -68,6 +68,7 @@ function App() {
 
   return (
     <BrowserRouter
+      basename="/web-portfolio/"
       future={{
         v7_startTransition: true,
         v7_relativeSplatPath: true,
