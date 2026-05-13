@@ -23,21 +23,21 @@ const projects = [
   },
   {
     id: 2,
-    Title: "OptiTech – Eye Tracking Research System",
+    Title: "OptiTech – Eye Health Monitoring System",
     Description:
-      "A real-time eye tracking system using computer vision and machine learning for gaze detection and interactive eye exercises. Accepted for presentation at ICCE 2025 International Conference.",
+      "A real-time eye health monitoring and eye care system using computer vision and machine learning for gaze detection and interactive eye exercises. Research paper published at ICAC 2025 (IEEE indexed), held at SLIIT.",
     Features: [
       "Real-time gaze detection from webcam",
+      "Eye health monitoring & diagnostics",
       "Interactive eye exercise modules",
       "Computer vision with OpenCV",
-      "Machine learning model integration",
-      "Accepted at ICCE 2025 Conference",
+      "Published at ICAC 2025 · IEEE Sri Lanka Section",
     ],
     Github: "",
     Img: project1,
     Link: "",
-    TechStack: ["FastAPI", "Python", "OpenCV", "Machine Learning"],
-    badge: "Conference Paper · ICCE 2025",
+    TechStack: ["FastAPI", "Python", "OpenCV", "Machine Learning", "Computer Vision"],
+    badge: "Published · ICAC 2025 · IEEE",
   },
   {
     id: 3,

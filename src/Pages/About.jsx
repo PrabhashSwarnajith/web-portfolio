@@ -116,10 +116,15 @@ const AboutPage = () => {
           {/* Text content */}
           <div className="space-y-6 text-center lg:text-left">
             <div data-aos="fade-right" data-aos-duration="1000">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold tracking-widest uppercase mb-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Currently @ CW Cloud Solutions Pty Ltd
-              </span>
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold tracking-widest uppercase">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Currently @ CW Cloud Solutions Pty Ltd
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-purple-500/25 bg-purple-500/8 text-purple-300 text-xs font-semibold tracking-widest uppercase">
+                  SLIIT · ICT Specialization
+                </span>
+              </div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-3">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
                   Hello, I'm
@@ -146,8 +151,11 @@ const AboutPage = () => {
               data-aos="fade-right"
               data-aos-duration="1500"
             >
-              My research project <span className="text-indigo-400 font-medium">OptiTech</span> — a real-time eye tracking
-              system — was accepted for presentation at the <span className="text-purple-400 font-medium">ICCE 2025 International Conference</span>.
+              My research paper{" "}
+              <span className="text-indigo-400 font-medium">"Eye Health Monitoring and Eye Care System"</span>{" "}
+              was published at{" "}
+              <span className="text-purple-400 font-medium">ICAC 2025</span>
+              {" "}(IEEE Sri Lanka Section · SLIIT, Malabe), Dec 2025.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center lg:items-start gap-3 w-full" data-aos="fade-up" data-aos-duration="800">

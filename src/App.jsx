@@ -6,6 +6,7 @@ import About from "./Pages/About";
 import Skills from "./Pages/Skills";
 import Experience from "./Pages/Experience";
 import Education from "./Pages/Education";
+import Research from "./Pages/Research";
 import AnimatedBackground from "./components/Background";
 import Navbar from "./components/Navbar";
 import Portofolio from "./Pages/Portofolio";
@@ -48,6 +49,7 @@ const LandingPage = ({ showWelcome, setShowWelcome }) => {
           <Home />
           <About />
           <Skills />
+          <Research />
           <Experience />
           <Education />
           <Portofolio />
