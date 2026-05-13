@@ -1,15 +1,19 @@
 import React from "react";
-import { Linkedin, Github, Instagram, Mail, Facebook, ExternalLink } from "lucide-react";
+import { Linkedin, Github, Instagram, Mail, ExternalLink, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
-const socialLinks = [
+const EMAIL = "prabhashswarnajith@gmail.com";
+
+const links = [
   {
     name: "Email",
-    displayName: "Email me",
-    subText: "prabhashswarnajith@gmail.com",
+    displayName: "Drop me an email",
+    subText: EMAIL,
     icon: Mail,
-    url: "mailto:prabhashswarnajith@gmail.com",
-    color: "#ffffff",
-    gradient: "from-[#333] to-[#24292e]",
+    url: `mailto:${EMAIL}`,
+    iconColor: "#e2e8f0",
+    cardClass: "bg-white/5 border-white/10 hover:border-white/25",
+    hoverGlow: "from-white/5 to-white/5",
     isPrimary: true,
   },
   {
@@ -18,17 +22,19 @@ const socialLinks = [
     subText: "@PrabhashSwarnajith",
     icon: Github,
     url: "https://github.com/PrabhashSwarnajith",
-    color: "#ffffff",
-    gradient: "from-[#333] to-[#24292e]",
+    iconColor: "#e2e8f0",
+    cardClass: "bg-[#161b22]/80 border-white/10 hover:border-white/25",
+    hoverGlow: "from-white/5 to-white/3",
   },
   {
     name: "LinkedIn",
-    displayName: "Let's Connect",
-    subText: "on LinkedIn",
+    displayName: "LinkedIn",
+    subText: "prabhash-swarnajith",
     icon: Linkedin,
     url: "https://www.linkedin.com/in/prabhash-swarnajith/",
-    color: "#0A66C2",
-    gradient: "from-[#0A66C2] to-[#0077B5]",
+    iconColor: "#0A66C2",
+    cardClass: "bg-[#0A66C2]/10 border-[#0A66C2]/20 hover:border-[#0A66C2]/40",
+    hoverGlow: "from-[#0A66C2]/10 to-[#0A66C2]/5",
   },
   {
     name: "Instagram",
@@ -36,130 +42,112 @@ const socialLinks = [
     subText: "@prabhash_swarnajith",
     icon: Instagram,
     url: "https://www.instagram.com/prabhash_swarnajith/",
-    color: "#E4405F",
-    gradient: "from-[#833AB4] via-[#E4405F] to-[#FCAF45]",
-  },
-  {
-    name: "Facebook",
-    displayName: "Facebook",
-    subText: "@prabash.swarnajith",
-    icon: Facebook,
-    url: "https://www.facebook.com/prabash.swarnajith.7",
-    color: "#1877F2",
-    gradient: "from-[#1877F2] to-[#1877F2]",
+    iconColor: "#E4405F",
+    cardClass: "bg-white/5 border-white/10 hover:border-pink-500/30",
+    hoverGlow: "from-[#833AB4]/10 via-[#E4405F]/8 to-[#FCAF45]/5",
   },
 ];
 
-const SocialLinkRow = ({ link }) => (
-  <a
-    href={link.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="group relative flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 overflow-hidden hover:border-white/20 transition-all duration-500"
-  >
-    {/* Hover gradient */}
-    <div
-      className={`absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-r ${link.gradient}`}
-    />
-
-    <div className="relative flex items-center gap-4">
-      <div className="relative flex items-center justify-center">
-        <div
-          className="absolute inset-0 opacity-20 rounded-md transition-all duration-500 group-hover:scale-110 group-hover:opacity-30"
-          style={{ backgroundColor: link.color }}
-        />
-        <div className="relative p-2 rounded-md">
-          <link.icon
-            className="w-6 h-6 transition-all duration-500 group-hover:scale-105"
-            style={{ color: link.color }}
-          />
-        </div>
-      </div>
-      <div className="flex flex-col">
-        <span className="text-base font-semibold text-gray-200 tracking-tight leading-none group-hover:text-white transition-colors duration-300">
-          {link.displayName}
-        </span>
-        <span className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors duration-300 mt-0.5">
-          {link.subText}
-        </span>
-      </div>
-    </div>
-
-    <ExternalLink className="relative w-5 h-5 text-gray-500 group-hover:text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-x-1 group-hover:translate-x-0" />
-
-    {/* Shine effect */}
-    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-    </div>
-  </a>
-);
-
-const SocialLinkCompact = ({ link }) => (
-  <a
-    href={link.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="group relative flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 overflow-hidden hover:border-white/20 transition-all duration-500"
-  >
-    <div className={`absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-r ${link.gradient}`} />
-
-    <div className="relative flex items-center justify-center">
-      <div
-        className="absolute inset-0 opacity-20 rounded-lg transition-all duration-500 group-hover:scale-125 group-hover:opacity-30"
-        style={{ backgroundColor: link.color }}
-      />
-      <div className="relative p-2 rounded-lg">
-        <link.icon
-          className="w-5 h-5 transition-all duration-500 group-hover:scale-110"
-          style={{ color: link.color }}
-        />
-      </div>
-    </div>
-
-    <div className="flex flex-col min-w-0">
-      <span className="text-sm font-bold text-gray-200 group-hover:text-white transition-colors duration-300">
-        {link.displayName}
-      </span>
-      <span className="text-xs text-gray-400 truncate group-hover:text-gray-300 transition-colors duration-300">
-        {link.subText}
-      </span>
-    </div>
-
-    <ExternalLink className="w-4 h-4 text-gray-500 group-hover:text-white ml-auto opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0" />
-
-    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-    </div>
-  </a>
-);
-
-const SocialLinks = () => {
-  const primaryLinks = socialLinks.filter((l) => l.isPrimary);
-  const fullRowLinks = socialLinks.filter((l) => !l.isPrimary && (l.name === "GitHub" || l.name === "LinkedIn"));
-  const compactLinks = socialLinks.filter((l) => !l.isPrimary && l.name !== "GitHub" && l.name !== "LinkedIn");
+const LinkRow = ({ link, index }) => {
+  const isEmail = link.isPrimary;
 
   return (
-    <div className="w-full bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-6 py-8 backdrop-blur-xl h-full">
-      <h3 className="text-xl font-semibold text-white mb-6 flex items-center justify-center gap-4">
-        <span className="inline-block w-12 h-1 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-full" />
-        Connect With Me
-        <span className="inline-block w-12 h-1 bg-gradient-to-r from-[#a855f7] to-[#6366f1] rounded-full" />
-      </h3>
+    <motion.a
+      href={link.url}
+      target={isEmail ? undefined : "_blank"}
+      rel={isEmail ? undefined : "noopener noreferrer"}
+      className={`group relative flex items-center justify-between gap-4 rounded-xl border backdrop-blur-sm overflow-hidden transition-all duration-300
+        ${isEmail ? "p-5" : "p-4"}
+        ${link.cardClass}`}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.1 + index * 0.07 }}
+    >
+      {/* Hover gradient wash */}
+      <div
+        className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 bg-gradient-to-r ${link.hoverGlow}`}
+      />
 
-      <div className="flex flex-col gap-3">
-        {/* Email + full row links */}
-        {[...primaryLinks, ...fullRowLinks].map((link) => (
-          <SocialLinkRow key={link.name} link={link} />
+      <div className="relative flex items-center gap-3.5 min-w-0">
+        {/* Icon container */}
+        <div
+          className={`flex-shrink-0 flex items-center justify-center rounded-lg
+            ${isEmail ? "w-11 h-11" : "w-9 h-9"}
+            bg-white/5 border border-white/10 group-hover:border-white/20 transition-colors duration-300`}
+        >
+          <link.icon
+            style={{ color: link.iconColor }}
+            className={`transition-transform duration-300 group-hover:scale-110 ${isEmail ? "w-5 h-5" : "w-4 h-4"}`}
+          />
+        </div>
+
+        {/* Text */}
+        <div className="min-w-0">
+          <p
+            className={`font-semibold text-white leading-snug ${isEmail ? "text-base" : "text-sm"}`}
+          >
+            {link.displayName}
+          </p>
+          <p
+            className={`text-gray-400 group-hover:text-gray-300 transition-colors duration-300 truncate
+              ${isEmail ? "text-sm mt-0.5" : "text-xs mt-0.5"}`}
+          >
+            {link.subText}
+          </p>
+        </div>
+      </div>
+
+      {/* Arrow */}
+      <ArrowRight
+        className="relative flex-shrink-0 w-4 h-4 text-gray-600 group-hover:text-gray-300 group-hover:translate-x-0.5 transition-all duration-300"
+      />
+
+      {/* Shine sweep */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+      </div>
+    </motion.a>
+  );
+};
+
+const SocialLinks = () => {
+  return (
+    <div className="w-full bg-white/5 rounded-2xl p-6 backdrop-blur-xl border border-white/10 h-full flex flex-col">
+      {/* Status bar */}
+      <motion.div
+        className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 mb-6"
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <span className="relative flex h-2 w-2 flex-shrink-0">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+        </span>
+        <p className="text-xs font-medium text-emerald-300 leading-none">
+          Currently available for new opportunities
+        </p>
+      </motion.div>
+
+      {/* Heading */}
+      <motion.div
+        className="mb-1"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 0.05 }}
+      >
+        <h3 className="text-xl font-bold text-white">Let's Connect</h3>
+        <p className="text-xs text-gray-500 mt-1">Open to work · Available for freelance</p>
+      </motion.div>
+
+      {/* Divider */}
+      <div className="h-px bg-white/5 my-4" />
+
+      {/* Links */}
+      <div className="flex flex-col gap-2.5 flex-1">
+        {links.map((link, i) => (
+          <LinkRow key={link.name} link={link} index={i} />
         ))}
-
-        {/* Compact grid for Instagram & Facebook */}
-        {compactLinks.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {compactLinks.map((link) => (
-              <SocialLinkCompact key={link.name} link={link} />
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );

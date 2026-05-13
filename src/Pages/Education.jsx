@@ -1,98 +1,153 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { MapPin, Calendar, CheckCircle2 } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { MapPin } from "lucide-react";
 import educationData from "../data/education.js";
 
-const EducationCard = ({ data, index }) => (
-  <motion.div
-    className="group relative bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10 hover:border-indigo-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/10"
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.6, delay: index * 0.15 }}
-  >
-    <div className="absolute inset-0 bg-gradient-to-br from-[#6366f1]/5 to-[#a855f7]/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+const isSLIIT = (institution) =>
+  institution.toLowerCase().includes("sliit") ||
+  institution.toLowerCase().includes("sri lanka institute");
 
-    {/* Shimmer */}
-    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none overflow-hidden rounded-2xl">
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-    </div>
-
-    <div className="relative z-10">
-      {/* Header row */}
-      <div className="flex items-start gap-4 mb-4">
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#6366f1] to-[#a855f7] flex items-center justify-center text-2xl flex-shrink-0 shadow-lg shadow-indigo-500/20">
-          {data.icon}
-        </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-bold text-white leading-tight mb-1 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#6366f1] group-hover:to-[#a855f7] transition-all duration-300">
-            {data.degree}
-          </h3>
-          <p className="text-indigo-300 text-sm font-medium truncate">{data.institution}</p>
-        </div>
-        <span
-          className={`text-xs font-semibold px-3 py-1 rounded-full flex-shrink-0 border ${
-            data.status === "Ongoing"
-              ? "bg-emerald-500/10 text-emerald-300 border-emerald-500/30"
-              : "bg-white/5 text-gray-300 border-white/10"
-          }`}
-        >
-          {data.status}
+const StatusBadge = ({ status }) => {
+  if (status === "Ongoing") {
+    return (
+      <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">
+        <span className="relative flex h-1.5 w-1.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
         </span>
-      </div>
+        Ongoing
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full bg-white/5 text-gray-400 border border-white/10">
+      Completed
+    </span>
+  );
+};
 
-      {/* Meta */}
-      <div className="flex flex-wrap gap-4 mb-4">
-        <div className="flex items-center gap-1.5 text-gray-400 text-sm">
-          <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
-          <span>{data.period}</span>
-        </div>
-        <div className="flex items-center gap-1.5 text-gray-400 text-sm">
-          <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
-          <span>{data.location}</span>
-        </div>
-      </div>
+const EducationCard = ({ data, index }) => {
+  const ref = React.useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const featured = isSLIIT(data.institution);
 
-      <p className="text-gray-400 text-sm leading-relaxed mb-4">{data.description}</p>
+  const topBarClass = featured
+    ? "bg-gradient-to-r from-indigo-500 to-purple-500"
+    : "bg-gradient-to-r from-purple-600 to-fuchsia-500";
 
-      {/* Achievements */}
-      <div className="space-y-2">
-        {data.achievements.map((item, i) => (
-          <div key={i} className="flex items-start gap-2 text-sm text-gray-300">
-            <CheckCircle2 className="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0" />
-            <span>{item}</span>
+  return (
+    <motion.div
+      ref={ref}
+      className={`group relative bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 overflow-hidden
+        hover:border-white/20 hover:shadow-xl transition-all duration-300
+        ${featured ? "hover:shadow-indigo-500/10" : "hover:shadow-purple-500/10"}
+        ${featured ? "lg:row-span-1" : ""}`}
+      initial={{ opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.55, delay: index * 0.13, ease: [0.25, 0.46, 0.45, 0.94] }}
+    >
+      {/* Top colored bar */}
+      <div className={`h-1 w-full ${topBarClass}`} />
+
+      {/* Hover glow */}
+      <div
+        className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400
+          ${featured
+            ? "bg-gradient-to-br from-indigo-500/5 to-purple-500/5"
+            : "bg-gradient-to-br from-purple-500/5 to-fuchsia-500/5"}`}
+      />
+
+      {/* Floating emoji backdrop */}
+      <span className="absolute right-4 bottom-4 text-9xl select-none pointer-events-none opacity-[0.07] leading-none">
+        {data.icon}
+      </span>
+
+      <div className="relative z-10 p-6">
+        {/* Featured indicator */}
+        {featured && (
+          <div className="inline-flex items-center gap-1.5 text-[10px] font-mono tracking-widest uppercase text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-full mb-4">
+            <span className="w-1 h-1 rounded-full bg-indigo-400" />
+            Main Degree
           </div>
-        ))}
+        )}
+
+        {/* Status badge */}
+        <div className="flex items-start justify-between gap-3 mb-4">
+          <div className="flex-1 min-w-0">
+            <h3 className="text-lg font-bold text-white leading-snug mb-1 pr-2">
+              {data.degree}
+            </h3>
+            <p className="text-indigo-400 text-sm font-medium">{data.institution}</p>
+          </div>
+          <div className="flex-shrink-0">
+            <StatusBadge status={data.status} />
+          </div>
+        </div>
+
+        {/* Meta row */}
+        <div className="flex flex-wrap items-center gap-4 mb-4">
+          <span className="font-mono text-xs text-gray-400 bg-white/5 px-2.5 py-1 rounded-md border border-white/10">
+            {data.period}
+          </span>
+          <span className="flex items-center gap-1 text-gray-500 text-xs">
+            <MapPin className="w-3 h-3 flex-shrink-0" />
+            {data.location}
+          </span>
+        </div>
+
+        <p className="text-gray-400 text-sm leading-relaxed mb-5">{data.description}</p>
+
+        {/* Achievements */}
+        <ul className="space-y-2">
+          {data.achievements.map((item, i) => (
+            <li key={i} className="flex items-start gap-2 text-sm text-gray-300">
+              <span
+                className={`mt-0.5 flex-shrink-0 font-bold ${
+                  featured ? "text-indigo-400" : "text-purple-400"
+                }`}
+              >
+                ›
+              </span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
-  </motion.div>
-);
+    </motion.div>
+  );
+};
 
 const Education = () => {
+  const headingRef = React.useRef(null);
+  const headingInView = useInView(headingRef, { once: true });
+
   return (
-    <section className="py-20 px-[5%] sm:px-[5%] lg:px-[10%] bg-[#030014]" id="Education">
-      <div className="text-center mb-16">
-        <motion.h2
-          className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7] mb-4"
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+    <section className="py-24 px-[5%] lg:px-[10%] bg-[#030014]" id="Education">
+      {/* Section heading */}
+      <div className="mb-16 max-w-5xl mx-auto">
+        <motion.div
+          ref={headingRef}
+          initial={{ opacity: 0, y: 16 }}
+          animate={headingInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
         >
-          Education
-        </motion.h2>
-        <motion.p
-          className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          My academic background and the educational milestones that built my foundation.
-        </motion.p>
+          <span className="text-xs font-mono text-indigo-400 tracking-[0.2em] uppercase mb-3 block">
+            03 — Academic
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+            Education &amp;{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+              Background
+            </span>
+          </h2>
+          <p className="mt-4 text-gray-500 text-sm max-w-xl">
+            The academic milestones and institutions that built my technical foundation.
+          </p>
+        </motion.div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
+      {/* Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 max-w-5xl mx-auto">
         {educationData.map((edu, index) => (
           <EducationCard key={edu.id} data={edu} index={index} />
         ))}

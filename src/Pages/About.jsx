@@ -33,24 +33,30 @@ const STATS = [
 ];
 
 const Header = memo(() => (
-  <div className="text-center lg:mb-8 mb-2 px-[5%]">
-    <div className="inline-block">
-      <h2
-        className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]"
-        data-aos="zoom-in-up"
-        data-aos-duration="600"
-      >
-        About Me
-      </h2>
-    </div>
+  <div className="text-center lg:mb-10 mb-4">
+    <span
+      className="text-xs font-mono text-indigo-400 tracking-[0.2em] uppercase mb-3 block"
+      data-aos="fade-up"
+      data-aos-duration="500"
+    >
+      00 — Introduction
+    </span>
+    <h2
+      className="text-4xl md:text-5xl font-bold text-white"
+      data-aos="zoom-in-up"
+      data-aos-duration="600"
+    >
+      About{" "}
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+        Me
+      </span>
+    </h2>
     <p
-      className="mt-2 text-gray-400 max-w-2xl mx-auto text-base sm:text-lg flex items-center justify-center gap-2"
+      className="mt-3 text-gray-500 max-w-xl mx-auto text-sm sm:text-[15px] leading-relaxed"
       data-aos="zoom-in-up"
       data-aos-duration="800"
     >
-      <Sparkles className="w-4 h-4 text-purple-400" />
       Building scalable solutions with clean code and creative thinking
-      <Sparkles className="w-4 h-4 text-purple-400" />
     </p>
   </div>
 ));
@@ -80,20 +86,17 @@ const ProfileImage = memo(() => (
 
 const StatCard = memo(({ icon: Icon, color, value, label, description, animation }) => (
   <div data-aos={animation} data-aos-duration="1000">
-    <div className="relative group bg-white/5 backdrop-blur-lg rounded-2xl p-5 border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105 hover:shadow-xl h-full flex flex-col justify-between overflow-hidden">
-      <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl`} />
-      <div className="flex items-center justify-between mb-3">
-        <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/10 group-hover:rotate-6 transition-transform duration-300">
-          <Icon className="w-6 h-6 text-white" />
+    <div className="relative group bg-white/[0.03] border border-white/[0.07] rounded-2xl p-5 hover:border-white/[0.14] hover:bg-white/[0.05] transition-all duration-300 h-full flex flex-col justify-between overflow-hidden">
+      <div className={`absolute top-0 left-4 right-4 h-px bg-gradient-to-r ${color} opacity-30 group-hover:opacity-70 transition-opacity duration-300`} />
+      <div className="flex items-start justify-between mb-4">
+        <div className="p-2.5 rounded-xl bg-white/[0.06] border border-white/[0.07] group-hover:bg-white/[0.09] transition-colors duration-300">
+          <Icon className="w-5 h-5 text-gray-300" />
         </div>
-        <span className="text-4xl font-bold text-white">{value}</span>
+        <span className="text-4xl font-bold text-white tabular-nums">{value}</span>
       </div>
       <div>
-        <p className="text-xs uppercase tracking-widest text-gray-300 font-semibold mb-1">{label}</p>
-        <div className="flex items-center justify-between">
-          <p className="text-xs text-gray-500">{description}</p>
-          <ArrowUpRight className="w-4 h-4 text-white/30 group-hover:text-white/70 transition-colors" />
-        </div>
+        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">{label}</p>
+        <p className="text-xs text-gray-600">{description}</p>
       </div>
     </div>
   </div>

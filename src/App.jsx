@@ -15,16 +15,19 @@ import WelcomeScreen from "./Pages/WelcomeScreen";
 import { AnimatePresence } from 'framer-motion';
 
 const Footer = () => (
-  <footer className="border-t border-white/5">
-    <div className="text-center py-6 px-4">
-      <p className="text-sm text-gray-500">
-        © {new Date().getFullYear()}{" "}
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7] font-medium">
+  <footer className="border-t border-white/[0.06] bg-[#030014]">
+    <div className="max-w-5xl mx-auto px-5 py-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="flex items-center gap-2.5">
+        <div className="w-7 h-7 rounded-md bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+          <span className="text-white font-bold text-[11px]">PS</span>
+        </div>
+        <span className="text-sm text-gray-500">
           Prabhash Swarnajith
         </span>
-        . All Rights Reserved.
+      </div>
+      <p className="text-xs text-gray-700 font-mono">
+        © {new Date().getFullYear()} · Built with React &amp; Tailwind CSS
       </p>
-      <p className="text-xs text-gray-600 mt-1">Built with React &amp; Tailwind CSS</p>
     </div>
   </footer>
 );
