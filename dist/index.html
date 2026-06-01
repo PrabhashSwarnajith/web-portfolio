@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head> 
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prabhash Swarnajith - Portfolio</title>
-    <script type="module" crossorigin src="/assets/index-BvnXpO26.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BNriJJvT.css">
+    <script>
+      (function() {
+        var q = window.location.search;
+        if (q && q.indexOf('?p=') === 0) {
+          var path = decodeURIComponent(q.slice(3).replace(/&h=.*$/, ''));
+          var hash = q.indexOf('&h=') !== -1
+            ? decodeURIComponent(q.replace(/.*&h=/, ''))
+            : '';
+          window.history.replaceState(null, null, path + hash);
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-7PZLp2oM.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-GDXWm-oF.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"></div>
   </body>
 </html>
