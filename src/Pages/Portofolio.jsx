@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback} from "react";
+import PropTypes from "prop-types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from 'swiper/modules';
 import { useTheme } from "@mui/material/styles";
@@ -87,6 +88,12 @@ function TabPanel({ children, value, index, ...other }) {
     </div>
   );
 }
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
 
 function a11yProps(index) {
   return {
@@ -264,9 +271,6 @@ export default function FullWidthTabs() {
                   Description={project.Description}
                   Link={project.Link}
                   id={project.id}
-                  TechStack={project.TechStack || []}
-                  Github={project.Github || ""}
-                  badge={project.badge}
                 />
               </div>
             ))}
@@ -286,28 +290,7 @@ export default function FullWidthTabs() {
       {/* Slide 2: Certificates */}
       <SwiperSlide>
       <TabPanel value={value} index={1}>
-        <div className="container mx-auto overflow-hidden space-y-6">
-          {/* ICAC 2025 Publication card — always shown first */}
-          <div className="group relative bg-white/[0.03] border border-indigo-500/20 rounded-2xl p-6 hover:border-indigo-500/35 transition-all duration-300" data-aos="fade-up">
-            <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
-            <div className="flex flex-wrap items-start gap-4">
-              <div className="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex-shrink-0">
-                <Award className="w-6 h-6 text-indigo-400" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex flex-wrap gap-2 mb-2">
-                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/25 text-indigo-300 uppercase tracking-widest">ICAC 2025</span>
-                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-300 uppercase tracking-widest">IEEE Indexed</span>
-                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 uppercase tracking-widest">Published</span>
-                </div>
-                <h4 className="text-base font-bold text-white mb-1">"Eye Health Monitoring and Eye Care System"</h4>
-                <p className="text-sm text-gray-500">International Conference on Advancements in Computing · SLIIT, Dec 2025</p>
-                <p className="text-xs text-gray-600 mt-1 font-mono">IEEE Sri Lanka Section · MongoDB · SLIIT Faculty of Computing</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Other certificates */}
+        <div className="container mx-auto flex justify-center items-center overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-3 md:gap-5 gap-4">
             {displayedCertificates.map((certificate, index) => (
               <div
@@ -334,31 +317,18 @@ export default function FullWidthTabs() {
       {/* Slide 3: Tech Stacks */}
       <SwiperSlide>
       <TabPanel value={value} index={2}>
-        <div className="container mx-auto overflow-hidden pb-[5%] space-y-8">
-          {["Frontend", "Backend", "Database", "DevOps"].map((cat) => {
-            const catStacks = techStacks.filter((s) => s.category === cat);
-            if (!catStacks.length) return null;
-            const catColors = {
-              Frontend: "text-blue-400",
-              Backend: "text-violet-400",
-              Database: "text-emerald-400",
-              DevOps: "text-orange-400",
-            };
-            return (
-              <div key={cat}>
-                <p className={`text-[11px] font-mono uppercase tracking-[0.18em] mb-4 ${catColors[cat]}`}>
-                  — {cat}
-                </p>
-                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
-                  {catStacks.map((stack, index) => (
-                    <div key={index} data-aos="fade-up" data-aos-delay={index * 60}>
-                      <TechStackIcon TechStackIcon={stack.icon} Language={stack.language} category={stack.category} />
-                    </div>
-                  ))}
-                </div>
+        <div className="container mx-auto flex justify-center items-center overflow-hidden pb-[5%]">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 lg:gap-8 gap-5">
+            {techStacks.map((stack, index) => (
+              <div
+                key={index}
+                data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
+                data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
+              >
+                <TechStackIcon TechStackIcon={stack.icon} Language={stack.language} />
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </TabPanel>
       </SwiperSlide>

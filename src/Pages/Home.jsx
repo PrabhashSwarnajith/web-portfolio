@@ -1,233 +1,228 @@
-import React, { useState, useEffect, useCallback, memo } from "react";
-import { Github, Linkedin, Mail, Download, ChevronDown, ArrowRight } from "lucide-react";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import cv from "../assets/Prabhash Swarnajith - Resume.pdf";
+import React, { useState, useEffect, useCallback, memo } from "react"
+import { Github, Linkedin, Mail, ExternalLink, Instagram, Sparkles } from "lucide-react"
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
-const TYPING_SPEED = 85;
-const ERASING_SPEED = 40;
-const PAUSE_DURATION = 2000;
-const WORDS = ["Full-Stack Developer", "Backend Engineer", "AI Integration Specialist", "Software Engineering Intern"];
-const TECH_PILLS = ["Spring Boot", ".NET 8", "React.js", "Node.js", "Docker", "MongoDB"];
-
-const SOCIAL_LINKS = [
-  { icon: Github, link: "https://github.com/PrabhashSwarnajith", label: "GitHub" },
-  { icon: Linkedin, link: "https://www.linkedin.com/in/prabhash-swarnajith/", label: "LinkedIn" },
-  { icon: Mail, link: "mailto:prabhashswarnajith@gmail.com", label: "Email" },
-];
-
-const CODE_LINES = [
-  { tokens: [{ c: "text-blue-400", t: "const" }, { c: "text-white", t: " developer" }, { c: "text-gray-500", t: " = {" }] },
-  { indent: 1, tokens: [{ c: "text-purple-300", t: "name" }, { c: "text-gray-500", t: ": " }, { c: "text-green-300", t: '"Prabhash Swarnajith",' }] },
-  { indent: 1, tokens: [{ c: "text-purple-300", t: "role" }, { c: "text-gray-500", t: ": " }, { c: "text-green-300", t: '"Full-Stack Developer",' }] },
-  { indent: 1, tokens: [{ c: "text-purple-300", t: "stack" }, { c: "text-gray-500", t: ": [" }] },
-  { indent: 2, tokens: [{ c: "text-green-300", t: '"React"' }, { c: "text-gray-500", t: ", " }, { c: "text-green-300", t: '"Spring Boot",' }] },
-  { indent: 2, tokens: [{ c: "text-green-300", t: '".NET 8"' }, { c: "text-gray-500", t: ", " }, { c: "text-green-300", t: '"Node.js",' }] },
-  { indent: 1, tokens: [{ c: "text-gray-500", t: "]," }] },
-  { indent: 1, tokens: [{ c: "text-purple-300", t: "available" }, { c: "text-gray-500", t: ": " }, { c: "text-blue-400", t: "true," }] },
-  { tokens: [{ c: "text-gray-500", t: "};" }] },
-];
-
-const CodeCard = memo(() => (
-  <div className="relative w-full max-w-md mx-auto">
-    <div className="absolute -inset-10 bg-gradient-to-r from-indigo-600/8 to-purple-600/8 rounded-3xl blur-3xl pointer-events-none" />
-    <div className="relative rounded-2xl border border-white/10 bg-[#0d0d1a]/95 shadow-2xl overflow-hidden">
-      {/* Title bar */}
-      <div className="flex items-center gap-1.5 px-4 py-3 bg-white/[0.03] border-b border-white/[0.06]">
-        <div className="w-3 h-3 rounded-full bg-red-500/70" />
-        <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
-        <div className="w-3 h-3 rounded-full bg-green-500/70" />
-        <span className="ml-3 text-[11px] text-gray-500 font-mono">developer.config.ts</span>
-        <div className="ml-auto flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[10px] text-emerald-400 font-mono">active</span>
-        </div>
-      </div>
-      {/* Code */}
-      <div className="p-5 font-mono text-[13px] leading-[1.7]">
-        {CODE_LINES.map((line, i) => (
-          <div key={i} style={{ paddingLeft: `${(line.indent || 0) * 16}px` }}>
-            {line.tokens.map((tok, j) => (
-              <span key={j} className={tok.c}>{tok.t}</span>
-            ))}
-          </div>
-        ))}
-      </div>
-      {/* Status bar */}
-      <div className="flex items-center justify-between px-4 py-2 bg-indigo-600/15 border-t border-indigo-500/20">
-        <span className="text-[10px] text-indigo-300/80 font-mono">TypeScript</span>
-        <span className="text-[10px] text-indigo-300/80 font-mono">Ln 9, Col 2</span>
-      </div>
-    </div>
-
-    {/* Floating stat badges */}
-    <div className="absolute -top-5 -right-4 sm:-right-6 bg-[#0d0d1a] border border-indigo-500/30 rounded-xl p-3 shadow-xl shadow-black/50">
-      <p className="text-2xl font-bold text-white leading-none">5+</p>
-      <p className="text-[11px] text-gray-500 mt-0.5 font-mono">Projects</p>
-    </div>
-    <div className="absolute -bottom-4 -left-4 sm:-left-6 bg-[#0d0d1a] border border-emerald-500/30 rounded-xl px-3.5 py-2.5 shadow-xl shadow-black/50">
-      <div className="flex items-center gap-2">
-        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
-        <span className="text-[11px] font-medium text-emerald-300">Open to Work</span>
-      </div>
-    </div>
-    <div className="absolute top-1/2 -right-4 sm:-right-8 -translate-y-1/2 bg-[#0d0d1a] border border-purple-500/30 rounded-xl p-3 shadow-xl shadow-black/50 hidden xl:block">
-      <p className="text-2xl font-bold text-white leading-none">20+</p>
-      <p className="text-[11px] text-gray-500 mt-0.5 font-mono">Tech stack</p>
-    </div>
+// Memoized Components
+const MainTitle = memo(() => (
+  <div className="space-y-2" data-aos="fade-up" data-aos-delay="600">
+    <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-6xl xl:text-7xl font-bold tracking-tight">
+      <span className="relative inline-block">
+        <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
+        <span className="relative bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
+        Full-Stack
+        </span>
+      </span>
+      <br />
+      <span className="relative inline-block mt-2">
+        <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
+        <span className="relative bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent">
+          Developer
+        </span>
+      </span>
+    </h1>
   </div>
 ));
 
-const SocialBtn = memo(({ icon: Icon, link, label }) => (
-  <a href={link} target="_blank" rel="noopener noreferrer" title={label}>
-    <button className="group p-2.5 rounded-lg border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 transition-all duration-200">
-      <Icon className="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" />
+const TechStack = memo(({ tech }) => (
+  <div className="px-4 py-2 hidden sm:block rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-sm text-gray-300 hover:bg-white/10 transition-colors">
+    {tech}
+  </div>
+));
+
+const CTAButton = memo(({ href, text, icon: Icon }) => (
+  <a href={href}>
+    <button className="group relative w-[160px]">
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#4f52c9] to-[#8644c5] rounded-xl opacity-50 blur-md group-hover:opacity-90 transition-all duration-700"></div>
+      <div className="relative h-11 bg-[#030014] backdrop-blur-xl rounded-lg border border-white/10 leading-none overflow-hidden">
+        <div className="absolute inset-0 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 bg-gradient-to-r from-[#4f52c9]/20 to-[#8644c5]/20"></div>
+        <span className="absolute inset-0 flex items-center justify-center gap-2 text-sm group-hover:gap-3 transition-all duration-300">
+          <span className="bg-gradient-to-r from-gray-200 to-white bg-clip-text text-transparent font-medium z-10">
+            {text}
+          </span>
+          <Icon className={`w-4 h-4 text-gray-200 ${text === 'Contact' ? 'group-hover:translate-x-1' : 'group-hover:rotate-45'} transform transition-all duration-300 z-10`} />
+        </span>
+      </div>
     </button>
   </a>
 ));
 
-const Home = () => {
-  const [text, setText] = useState("");
-  const [isTyping, setIsTyping] = useState(true);
-  const [wordIndex, setWordIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+const SocialLink = memo(({ icon: Icon, link }) => (
+  <a href={link} target="_blank" rel="noopener noreferrer">
+    <button className="group relative p-3">
+      <div className="absolute inset-0 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
+      <div className="relative rounded-xl bg-black/50 backdrop-blur-xl p-2 flex items-center justify-center border border-white/10 group-hover:border-white/20 transition-all duration-300">
+        <Icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
+      </div>
+    </button>
+  </a>
+));
 
+// Constants
+const TYPING_SPEED = 100;
+const ERASING_SPEED = 50;
+const PAUSE_DURATION = 2000;
+const WORDS = ["Information Technology Student", "Tech Enthusiast"];
+const TECH_STACK = [ "Spring Boot","React", "MongoDB", "MySQL", "Javascript", "Node.js" , ];
+const SOCIAL_LINKS = [
+  { icon: Github, link: "https://github.com/PrabhashSwarnajith" },
+  { icon: Linkedin, link: "https://www.linkedin.com/in/prabhash-swarnajith/" },
+  { icon: Instagram, link: "https://www.linkedin.com/in/prabhash-swarnajith/" }
+  
+];
+
+const Home = () => {
+  const [text, setText] = useState("")
+  const [isTyping, setIsTyping] = useState(true)
+  const [wordIndex, setWordIndex] = useState(0)
+  const [charIndex, setCharIndex] = useState(0)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [isHovering, setIsHovering] = useState(false)
+
+  // Optimize AOS initialization
   useEffect(() => {
-    AOS.init({ once: true, offset: 10 });
-    setIsLoaded(true);
+    const initAOS = () => {
+      AOS.init({
+        once: true,
+        offset: 10,
+       
+      });
+    };
+
+    initAOS();
+    window.addEventListener('resize', initAOS);
+    return () => window.removeEventListener('resize', initAOS);
   }, []);
 
+  useEffect(() => {
+    setIsLoaded(true);
+    return () => setIsLoaded(false);
+  }, []);
+
+  // Optimize typing effect
   const handleTyping = useCallback(() => {
     if (isTyping) {
       if (charIndex < WORDS[wordIndex].length) {
-        setText((p) => p + WORDS[wordIndex][charIndex]);
-        setCharIndex((p) => p + 1);
+        setText(prev => prev + WORDS[wordIndex][charIndex]);
+        setCharIndex(prev => prev + 1);
       } else {
         setTimeout(() => setIsTyping(false), PAUSE_DURATION);
       }
     } else {
       if (charIndex > 0) {
-        setText((p) => p.slice(0, -1));
-        setCharIndex((p) => p - 1);
+        setText(prev => prev.slice(0, -1));
+        setCharIndex(prev => prev - 1);
       } else {
-        setWordIndex((p) => (p + 1) % WORDS.length);
+        setWordIndex(prev => (prev + 1) % WORDS.length);
         setIsTyping(true);
       }
     }
   }, [charIndex, isTyping, wordIndex]);
 
   useEffect(() => {
-    const t = setTimeout(handleTyping, isTyping ? TYPING_SPEED : ERASING_SPEED);
-    return () => clearTimeout(t);
+    const timeout = setTimeout(
+      handleTyping,
+      isTyping ? TYPING_SPEED : ERASING_SPEED
+    );
+    return () => clearTimeout(timeout);
   }, [handleTyping]);
+
+  // Lottie configuration
+  const lottieOptions = {
+    src: "https://lottie.host/58753882-bb6a-49f5-a2c0-950eda1e135a/NLbpVqGegK.lottie",
+    loop: true,
+    autoplay: true,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+      progressiveLoad: true,
+    },
+    style: { width: "100%", height: "100%" },
+    className: `w-full h-full transition-all duration-500 ${
+      isHovering 
+        ? "scale-[180%] sm:scale-[160%] md:scale-[150%] lg:scale-[145%] rotate-2" 
+        : "scale-[175%] sm:scale-[155%] md:scale-[145%] lg:scale-[140%]"
+    }`
+  };
 
   return (
     <div className="min-h-screen bg-[#030014] overflow-hidden" id="Home">
-      <div className={`relative z-10 transition-opacity duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
-        <div className="container mx-auto px-5 sm:px-8 lg:px-[8%] min-h-screen">
-          <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen gap-16 lg:gap-20 pt-28 pb-20 lg:pt-0 lg:pb-0">
+      <div className={`relative z-10 transition-all duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
+        <div className="container mx-auto px-[5%] sm:px-6 lg:px-[0%] min-h-screen">
+          <div className="flex flex-col lg:flex-row items-center justify-center h-screen md:justify-between gap-0 sm:gap-12 lg:gap-20">
+            {/* Left Column */}
+            <div className="w-full lg:w-1/2 space-y-6 sm:space-y-8 text-left lg:text-left order-1 lg:order-1 lg:mt-0"
+              data-aos="fade-right"
+              data-aos-delay="200">
+              <div className="space-y-4 sm:space-y-6">
+                
+                <MainTitle />
 
-            {/* ── Left column ── */}
-            <div className="w-full lg:w-1/2 space-y-6" data-aos="fade-right" data-aos-delay="100">
-
-              {/* Company badges */}
-              <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-indigo-500/20 bg-indigo-500/[0.07] text-indigo-300 text-[11px] font-semibold tracking-[0.12em] uppercase">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  SE Intern · CW Cloud Solutions
-                </span>
-                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-violet-500/20 bg-violet-500/[0.07] text-violet-300 text-[11px] font-semibold tracking-[0.12em] uppercase">
-                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-                  Full Stack Dev · ICT Option
-                </span>
-              </div>
-
-              {/* Name */}
-              <div className="space-y-1">
-                <p className="text-gray-500 text-base font-light">Hi, I'm</p>
-                <h1 className="text-5xl sm:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.05]">
-                  <span className="text-white">Prabhash</span>
-                  <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
-                    Swarnajith
+                {/* Typing Effect */}
+                <div className="h-8 flex items-center" data-aos="fade-up" data-aos-delay="800">
+                  <span className="text-xl md:text-2xl bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text text-transparent font-light">
+                    {text}
                   </span>
-                </h1>
-              </div>
+                  <span className="w-[3px] h-6 bg-gradient-to-t from-[#6366f1] to-[#a855f7] ml-1 animate-blink"></span>
+                </div>
 
-              {/* Typing indicator */}
-              <div className="flex items-center gap-3 h-8">
-                <span className="w-px h-full bg-indigo-500/50 rounded-full" />
-                <span className="text-lg md:text-xl text-gray-300 font-light">{text}</span>
-                <span className="w-px h-5 bg-indigo-400 animate-pulse rounded-full" />
-              </div>
+                {/* Description */}
+                <p className="text-base md:text-lg text-gray-400 max-w-xl leading-relaxed font-light"
+                  data-aos="fade-up"
+                  data-aos-delay="1000">
+                  Building Scalable and Robust Full-Stack Applications with Spring Boot and React to Deliver Seamless Digital Solutions.
+                </p>
 
-              {/* Description */}
-              <p className="text-[15px] text-gray-400 max-w-xl leading-relaxed">
-                Motivated Software Engineering undergraduate with hands-on experience in full-stack development,
-                backend API design, AI integration, and workflow automation. Building scalable, secure digital solutions.
-              </p>
+                {/* Tech Stack */}
+                <div className="flex flex-wrap gap-3 justify-start" data-aos="fade-up" data-aos-delay="1200">
+                  {TECH_STACK.map((tech, index) => (
+                    <TechStack key={index} tech={tech} />
+                  ))}
+                </div>
 
-              {/* Tech pills */}
-              <div className="flex flex-wrap gap-2">
-                {TECH_PILLS.map((tech) => (
-                  <span
-                    key={tech}
-                    className="hidden sm:inline-flex items-center px-3 py-1 rounded-full border border-white/[0.07] bg-white/[0.03] text-[11px] font-mono text-gray-500 hover:border-indigo-500/30 hover:text-indigo-300 transition-colors cursor-default"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
+                {/* CTA Buttons */}
+                <div className="flex flex-row gap-3 w-full justify-start" data-aos="fade-up" data-aos-delay="1400">
+                  <CTAButton href="#Portofolio" text="Projects" icon={ExternalLink} />
+                  <CTAButton href="#Contact" text="Contact" icon={Mail} />
+                </div>
 
-              {/* CTA buttons */}
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href="#Portofolio"
-                  onClick={(e) => { e.preventDefault(); document.querySelector("#Portofolio")?.scrollIntoView({ behavior: "smooth" }); }}
-                >
-                  <button className="group inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-lg transition-all duration-200 shadow-lg shadow-indigo-600/25 hover:shadow-indigo-500/35">
-                    View Projects
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                  </button>
-                </a>
-
-                <a href={cv} download>
-                  <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/10 bg-white/[0.04] hover:bg-white/[0.07] text-sm font-medium text-gray-300 hover:text-white transition-all duration-200">
-                    <Download className="w-4 h-4" />
-                    Download CV
-                  </button>
-                </a>
-
-                <a href="https://www.linkedin.com/in/prabhash-swarnajith/" target="_blank" rel="noopener noreferrer">
-                  <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-[#0A66C2]/25 bg-[#0A66C2]/[0.07] hover:bg-[#0A66C2]/[0.15] text-sm font-medium text-[#7ab7f5] hover:text-white transition-all duration-200">
-                    <Linkedin className="w-4 h-4" />
-                    LinkedIn
-                  </button>
-                </a>
-              </div>
-
-              {/* Social icons row */}
-              <div className="hidden sm:flex items-center gap-2">
-                {SOCIAL_LINKS.map((s) => <SocialBtn key={s.label} {...s} />)}
-                <span className="ml-2 text-[11px] text-gray-600 font-mono">@PrabhashSwarnajith</span>
+                {/* Social Links */}
+                <div className="hidden sm:flex gap-4 justify-start" data-aos="fade-up" data-aos-delay="1600">
+                  {SOCIAL_LINKS.map((social, index) => (
+                    <SocialLink key={index} {...social} />
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* ── Right column — Code card ── */}
-            <div
-              className="w-full lg:w-1/2 flex items-center justify-center px-6 sm:px-8 lg:px-0"
+            {/* Right Column - Optimized Lottie Animation */}
+            <div className="w-full py-[10%] sm:py-0 lg:w-1/2 h-auto lg:h-[600px] xl:h-[750px] relative flex items-center justify-center order-2 lg:order-2 mt-8 lg:mt-0"
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
               data-aos="fade-left"
-              data-aos-delay="400"
-            >
-              <CodeCard />
-            </div>
-          </div>
+              data-aos-delay="600">
+              <div className="relative w-full opacity-90">
+                <div className={`absolute inset-0 bg-gradient-to-r from-[#6366f1]/10 to-[#a855f7]/10 rounded-3xl blur-3xl transition-all duration-700 ease-in-out ${
+                  isHovering ? "opacity-50 scale-105" : "opacity-20 scale-100"
+                }`}>
+                </div>
 
-          {/* Scroll cue */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-25 animate-bounce pointer-events-none">
-            <span className="text-[10px] text-gray-500 font-mono tracking-[0.2em] uppercase">Scroll</span>
-            <ChevronDown className="w-4 h-4 text-gray-500" />
+                <div className={`relative z-10 w-full opacity-90 transform transition-transform duration-500 ${
+                  isHovering ? "scale-105" : "scale-100"
+                }`}>
+                  <DotLottieReact {...lottieOptions} />
+                </div>
+
+                <div className={`absolute inset-0 pointer-events-none transition-all duration-700 ${
+                  isHovering ? "opacity-50" : "opacity-20"
+                }`}>
+                  <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-to-br from-indigo-500/10 to-purple-500/10 blur-3xl animate-[pulse_6s_cubic-bezier(0.4,0,0.6,1)_infinite] transition-all duration-700 ${
+                    isHovering ? "scale-110" : "scale-100"
+                  }`}>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

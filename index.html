@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head> 
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prabhash Swarnajith - Portfolio</title>
     <script>
       (function() {
-        var p = window.location.search.slice(1);
-        if (p.indexOf('p=') === 0) {
-          var path = decodeURIComponent(p.slice(2));
-          window.history.replaceState(null, null, '/web-portfolio/' + path);
+        var q = window.location.search;
+        if (q && q.indexOf('?p=') === 0) {
+          var path = decodeURIComponent(q.slice(3).replace(/&h=.*$/, ''));
+          var hash = q.indexOf('&h=') !== -1
+            ? decodeURIComponent(q.replace(/.*&h=/, ''))
+            : '';
+          window.history.replaceState(null, null, path + hash);
         }
       })();
     </script>

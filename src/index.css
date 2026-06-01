@@ -95,33 +95,16 @@ body {
 
 
 
-@keyframes shine {
-  from { left: -100%; }
-  to   { left: 200%; }
-}
-.animate-shine {
-  animation: shine 1.5s ease-in-out infinite;
-}
+ @keyframes shine {
+  from {
+	     left: -100%;
+  }
+	  to {
+	    left: 200%;
+	   }
+	 }
+	 .animate-shine {
+   animation: shine 1.5s ease-in-out infinite;
+ }
 
-@keyframes float-up {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-8px); }
-}
-.animate-float-up {
-  animation: float-up 4s ease-in-out infinite;
-}
-
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); }
-  50%       { box-shadow: 0 0 40px rgba(168, 85, 247, 0.4); }
-}
-.animate-glow-pulse {
-  animation: glow-pulse 3s ease-in-out infinite;
-}
-
-/* Section divider gradient line */
-.section-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), rgba(168,85,247,0.3), transparent);
-  margin: 0 10%;
-}
+  
