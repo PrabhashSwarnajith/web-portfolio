@@ -3,7 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prabhash Swarnajith - Portfolio</title>
+
+    <!-- Primary SEO -->
+    <title>Prabhash Swarnajith — Full-Stack Developer</title>
+    <meta name="description" content="Portfolio of Prabhash Swarnajith — Full-Stack Developer specializing in Spring Boot, React, and cloud-native applications. Open to exciting opportunities." />
+    <meta name="keywords" content="Prabhash Swarnajith, Full-Stack Developer, Spring Boot, React, Portfolio, Sri Lanka" />
+    <meta name="author" content="Prabhash Swarnajith" />
+    <link rel="canonical" href="https://www.prabhashswarnajith.tech/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.prabhashswarnajith.tech/" />
+    <meta property="og:title" content="Prabhash Swarnajith — Full-Stack Developer" />
+    <meta property="og:description" content="Building scalable full-stack web applications with Spring Boot, React, and modern cloud-native tools." />
+    <meta property="og:image" content="https://www.prabhashswarnajith.tech/og-image.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://www.prabhashswarnajith.tech/" />
+    <meta name="twitter:title" content="Prabhash Swarnajith — Full-Stack Developer" />
+    <meta name="twitter:description" content="Building scalable full-stack web applications with Spring Boot, React, and modern cloud-native tools." />
+    <meta name="twitter:image" content="https://www.prabhashswarnajith.tech/og-image.jpg" />
+
+    <!-- Theme color for browser chrome -->
+    <meta name="theme-color" content="#030014" />
+
+    <!-- SPA redirect script for GitHub Pages -->
     <script>
       (function() {
         var q = window.location.search;
@@ -12,12 +37,14 @@
           var hash = q.indexOf('&h=') !== -1
             ? decodeURIComponent(q.replace(/.*&h=/, ''))
             : '';
-          window.history.replaceState(null, null, path + hash);
+          if (path.charAt(0) === '/') {
+            window.history.replaceState(null, null, path + hash);
+          }
         }
       })();
     </script>
-    <script type="module" crossorigin src="/assets/index-vJjlI2Sg.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DHLotDL0.css">
+    <script type="module" crossorigin src="/assets/index-Db6QawGO.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CKck6gNi.css">
   </head>
   <body>
     <div id="root"></div>

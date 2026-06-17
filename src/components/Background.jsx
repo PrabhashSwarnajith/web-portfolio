@@ -10,37 +10,21 @@ const AnimatedBackground = () => {
 	]
 
 	useEffect(() => {
-		let currentScroll = 0
-		let requestId
-
 		const handleScroll = () => {
 			const newScroll = window.pageYOffset
-			const scrollDelta = newScroll - currentScroll
-			currentScroll = newScroll
 
 			blobRefs.current.forEach((blob, index) => {
+				if (!blob) return
 				const initialPos = initialPositions[index]
-
-				// Calculating movement in both X and Y direction
-				const xOffset = Math.sin(newScroll / 100 + index * 0.5) * 340 // Horizontal movement
-				const yOffset = Math.cos(newScroll / 100 + index * 0.5) * 40 // Vertical movement
-
-				const x = initialPos.x + xOffset
-				const y = initialPos.y + yOffset
-
-				// Apply transformation with smooth transition
-				blob.style.transform = `translate(${x}px, ${y}px)`
+				const xOffset = Math.sin(newScroll / 100 + index * 0.5) * 340
+				const yOffset = Math.cos(newScroll / 100 + index * 0.5) * 40
+				blob.style.transform = `translate(${initialPos.x + xOffset}px, ${initialPos.y + yOffset}px)`
 				blob.style.transition = "transform 1.4s ease-out"
 			})
-
-			requestId = requestAnimationFrame(handleScroll)
 		}
 
-		window.addEventListener("scroll", handleScroll)
-		return () => {
-			window.removeEventListener("scroll", handleScroll)
-			cancelAnimationFrame(requestId)
-		}
+		window.addEventListener("scroll", handleScroll, { passive: true })
+		return () => window.removeEventListener("scroll", handleScroll)
 	}, [])
 
 	return (

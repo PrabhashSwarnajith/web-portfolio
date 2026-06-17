@@ -129,7 +129,7 @@ const Experience = () => {
   const headingInView = useInView(headingRef, { once: true });
 
   return (
-    <section className="py-24 px-[5%] lg:px-[10%] bg-[#030014]" id="Experience">
+    <section className="py-20 md:py-28 px-5 sm:px-8 lg:px-[10%] bg-[#030014]" id="Experience">
       {/* Section heading */}
       <div className="mb-16 max-w-4xl mx-auto">
         <motion.div
@@ -139,7 +139,7 @@ const Experience = () => {
           transition={{ duration: 0.5 }}
         >
           <span className="text-xs font-mono text-indigo-400 tracking-[0.2em] uppercase mb-3 block">
-            02 — Professional
+            03 — Professional
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
             Work{" "}

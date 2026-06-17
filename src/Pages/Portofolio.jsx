@@ -1,340 +1,195 @@
-import React, { useEffect, useState, useCallback} from "react";
-import PropTypes from "prop-types";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from 'swiper/modules';
-import { useTheme } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import React, { useEffect, useState, useCallback, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import ProjectCard from "../components/ProjectCard";
 import TechStackIcon from "../components/TechStackIcon";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import Certificate from "../components/Certificate";
-import { Code, Award, Boxes } from "lucide-react";
+import { Code, Award, Boxes, ChevronDown, ChevronUp } from "lucide-react";
 import projectData from "../data/projects.js";
 import certificateData from "../data/certificates.js";
 import techStacks from "../data/techStack.js";
 
-// Separate ShowMore/ShowLess button component
+const TABS = [
+  { label: "Projects", icon: Code },
+  { label: "Certificates", icon: Award },
+  { label: "Tech Stack", icon: Boxes },
+];
+
 const ToggleButton = ({ onClick, isShowingMore }) => (
   <button
     onClick={onClick}
-    className="
-      px-3 py-1.5
-      text-slate-300 
-      hover:text-white 
-      text-sm 
-      font-medium 
-      transition-all 
-      duration-300 
-      ease-in-out
-      flex 
-      items-center 
-      gap-2
-      bg-white/5 
-      hover:bg-white/10
-      rounded-md
-      border 
-      border-white/10
-      hover:border-white/20
-      backdrop-blur-sm
-      group
-      relative
-      overflow-hidden
-    "
+    className="group flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary-400/40 backdrop-blur-sm transition-all duration-300"
   >
-    <span className="relative z-10 flex items-center gap-2">
-      {isShowingMore ? "See Less" : "See More"}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={`
-          transition-transform 
-          duration-300 
-          ${isShowingMore ? "group-hover:-translate-y-0.5" : "group-hover:translate-y-0.5"}
-        `}
-      >
-        <polyline points={isShowingMore ? "18 15 12 9 6 15" : "6 9 12 15 18 9"}></polyline>
-      </svg>
-    </span>
-    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-500/50 transition-all duration-300 group-hover:w-full"></span>
+    {isShowingMore ? (
+      <>Show Less <ChevronUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" /></>
+    ) : (
+      <>Show More <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" /></>
+    )}
   </button>
 );
 
-function TabPanel({ children, value, index, ...other }) {
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: { xs: 1, sm: 3 } }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
-  };
-}
-
-
-export default function FullWidthTabs() {
-  const theme = useTheme();
+export default function Portfolio() {
   const [value, setValue] = useState(0);
   const [projects, setProjects] = useState([]);
   const [certificates, setCertificates] = useState([]);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [showAllCertificates, setShowAllCertificates] = useState(false);
-  const isMobile = window.innerWidth < 768;
-  const initialItems = isMobile ? 4 : 6;
-
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
-    AOS.init({ once: false });
-  
     setProjects(projectData);
     setCertificates(certificateData);
-  
-    localStorage.setItem("projects", JSON.stringify(projectData));
-    localStorage.setItem("certificates", JSON.stringify(certificateData));
+
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const initialItems = isMobile ? 4 : 6;
 
   const toggleShowMore = useCallback((type) => {
-    if (type === 'projects') {
-      setShowAllProjects(prev => !prev);
-    } else {
-      setShowAllCertificates(prev => !prev);
-    }
+    if (type === "projects") setShowAllProjects((p) => !p);
+    else setShowAllCertificates((p) => !p);
   }, []);
 
   const displayedProjects = showAllProjects ? projects : projects.slice(0, initialItems);
   const displayedCertificates = showAllCertificates ? certificates : certificates.slice(0, initialItems);
 
   return (
-    <div className="md:px-[10%] px-[5%] w-full sm:mt-0 mt-[3rem] bg-[#030014] overflow-hidden" id="Portofolio">
-      {/* Header section - unchanged */}
-      <div className="text-center pb-10" data-aos="fade-up" data-aos-duration="1000">
-        <h2 className="inline-block text-3xl md:text-5xl font-bold text-center mx-auto text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
-          <span style={{
-            color: '#6366f1',
-            backgroundImage: 'linear-gradient(45deg, #6366f1 10%, #a855f7 93%)',
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}>
-            Portfolio Showcase
-          </span>
+    <div className="py-20 md:py-28 px-5 sm:px-8 lg:px-[10%] w-full bg-[#030014] overflow-hidden" id="Portofolio">
+
+      {/* Section header */}
+      <div className="text-center pb-16" data-aos="fade-up" data-aos-duration="800">
+        <span className="text-xs font-mono text-indigo-400 tracking-[0.2em] uppercase mb-3 block">
+          05 — Showcase
+        </span>
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
+            Portfolio
+          </span>{" "}
+          <span className="text-white">Showcase</span>
         </h2>
-        <p className="text-slate-400 max-w-2xl mx-auto text-sm md:text-base mt-2">
-          Explore my journey through projects, certifications, and technical expertise. 
-          Each section represents a milestone in my continuous learning path.
+        <p className="text-slate-500 max-w-2xl mx-auto text-sm md:text-[15px] mt-4 leading-relaxed">
+          Explore my projects, certifications, and the technologies I work with every day.
         </p>
       </div>
 
-      <Box sx={{ width: "100%" }}>
-        {/* AppBar and Tabs section - unchanged */}
-        <AppBar
-          position="static"
-          elevation={0}
-          sx={{
-            bgcolor: "transparent",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            borderRadius: "20px",
-            position: "relative",
-            overflow: "hidden",
-            "&::before": {
-              content: '""',
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: "linear-gradient(180deg, rgba(139, 92, 246, 0.03) 0%, rgba(59, 130, 246, 0.03) 100%)",
-              backdropFilter: "blur(10px)",
-              zIndex: 0,
-            },
-          }}
-          className="md:px-4"
-        >
-          {/* Tabs remain unchanged */}
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            textColor="secondary"
-            indicatorColor="secondary"
-            variant="fullWidth"
-            sx={{
-              // Existing styles remain unchanged
-              minHeight: "70px",
-              "& .MuiTab-root": {
-                fontSize: { xs: "0.9rem", md: "1rem" },
-                fontWeight: "600",
-                color: "#94a3b8",
-                textTransform: "none",
-                transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                padding: "20px 0",
-                zIndex: 1,
-                margin: "8px",
-                borderRadius: "12px",
-                "&:hover": {
-                  color: "#ffffff",
-                  backgroundColor: "rgba(139, 92, 246, 0.1)",
-                  transform: "translateY(-2px)",
-                  "& .lucide": {
-                    transform: "scale(1.1) rotate(5deg)",
-                  },
-                },
-                "&.Mui-selected": {
-                  color: "#fff",
-                  background: "linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.2))",
-                  boxShadow: "0 4px 15px -3px rgba(139, 92, 246, 0.2)",
-                  "& .lucide": {
-                    color: "#a78bfa",
-                  },
-                },
-              },
-              "& .MuiTabs-indicator": {
-                height: 0,
-              },
-              "& .MuiTabs-flexContainer": {
-                gap: "8px",
-              },
-            }}
+      {/* Custom Tab Bar */}
+      <div
+        className="flex gap-2 p-1.5 bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl mb-10 max-w-lg mx-auto"
+        data-aos="fade-up"
+        data-aos-duration="800"
+        data-aos-delay="100"
+      >
+        {TABS.map((tab, i) => {
+          const Icon = tab.icon;
+          const active = value === i;
+          return (
+            <button
+              key={tab.label}
+              onClick={() => setValue(i)}
+              className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-xl text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+                active
+                  ? "bg-gradient-to-r from-indigo-600/30 to-purple-600/30 text-white border border-indigo-500/30 shadow-lg shadow-indigo-500/10"
+                  : "text-slate-400 hover:text-white hover:bg-white/5"
+              }`}
+              aria-selected={active}
+              role="tab"
+            >
+              <Icon className={`w-4 h-4 transition-all duration-300 ${active ? "text-indigo-400" : ""}`} />
+              <span className="hidden sm:inline">{tab.label}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Tab Content */}
+      <AnimatePresence mode="wait">
+        {value === 0 && (
+          <motion.div
+            key="projects"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
           >
-            <Tab
-              icon={<Code className="mb-2 w-5 h-5 transition-all duration-300" />}
-              label="Projects"
-              {...a11yProps(0)}
-            />
-            <Tab
-              icon={<Award className="mb-2 w-5 h-5 transition-all duration-300" />}
-              label="Certificates"
-              {...a11yProps(1)}
-            />
-            <Tab
-              icon={<Boxes className="mb-2 w-5 h-5 transition-all duration-300" />}
-              label="Tech Stack"
-              {...a11yProps(2)}
-            />
-          </Tabs>
-        </AppBar>
-        
-
-        <Swiper
-        direction="horizontal"
-         onSlideChange={(swiper) => setValue(swiper.activeIndex)}
-       >
-      {/* Slide 1: Projects */}
-      <SwiperSlide> 
-      <TabPanel value={value} index={0}>
-        <div className="container mx-auto flex justify-center items-center overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
-            {displayedProjects.map((project, index) => (
-              <div
-                key={project.id || index}
-                data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
-                data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
-              >
-                <ProjectCard
-                  Img={project.Img}
-                  Title={project.Title}
-                  Description={project.Description}
-                  Link={project.Link}
-                  id={project.id}
-                />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+              {displayedProjects.map((project, index) => (
+                <div
+                  key={project.id || index}
+                  data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
+                  data-aos-duration="800"
+                  data-aos-delay={index * 80}
+                >
+                  <ProjectCard
+                    Img={project.Img}
+                    Title={project.Title}
+                    Description={project.Description}
+                    Link={project.Link}
+                    Github={project.Github}
+                    id={project.id}
+                  />
+                </div>
+              ))}
+            </div>
+            {projects.length > initialItems && (
+              <div className="mt-8 flex justify-center">
+                <ToggleButton onClick={() => toggleShowMore("projects")} isShowingMore={showAllProjects} />
               </div>
-            ))}
-          </div>
-        </div>
-        {projects.length > initialItems && (
-          <div className="mt-6 w-full flex justify-start">
-            <ToggleButton
-              onClick={() => toggleShowMore('projects')}
-              isShowingMore={showAllProjects}
-            />
-          </div>
+            )}
+          </motion.div>
         )}
-      </TabPanel>
-      </SwiperSlide>
 
-      {/* Slide 2: Certificates */}
-      <SwiperSlide>
-      <TabPanel value={value} index={1}>
-        <div className="container mx-auto flex justify-center items-center overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-3 md:gap-5 gap-4">
-            {displayedCertificates.map((certificate, index) => (
-              <div
-                key={index}
-                data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
-                data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
-              >
-                <Certificate certificateImage={certificate.Img} />
+        {value === 1 && (
+          <motion.div
+            key="certificates"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+              {displayedCertificates.map((cert, index) => (
+                <div
+                  key={cert.id || index}
+                  data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
+                  data-aos-duration="800"
+                  data-aos-delay={index * 80}
+                >
+                  <Certificate certificateImage={cert.Img} title={cert.Title} />
+                </div>
+              ))}
+            </div>
+            {certificates.length > initialItems && (
+              <div className="mt-8 flex justify-center">
+                <ToggleButton onClick={() => toggleShowMore("certificates")} isShowingMore={showAllCertificates} />
               </div>
-            ))}
-          </div>
-        </div>
-        {certificates.length > initialItems && (
-          <div className="mt-6 w-full flex justify-start">
-            <ToggleButton
-              onClick={() => toggleShowMore('certificates')}
-              isShowingMore={showAllCertificates}
-            />
-          </div>
+            )}
+          </motion.div>
         )}
-      </TabPanel>
-      </SwiperSlide>
 
-      {/* Slide 3: Tech Stacks */}
-      <SwiperSlide>
-      <TabPanel value={value} index={2}>
-        <div className="container mx-auto flex justify-center items-center overflow-hidden pb-[5%]">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 lg:gap-8 gap-5">
-            {techStacks.map((stack, index) => (
-              <div
-                key={index}
-                data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
-                data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
-              >
-                <TechStackIcon TechStackIcon={stack.icon} Language={stack.language} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </TabPanel>
-      </SwiperSlide>
-    </Swiper>
-
-      </Box>
+        {value === 2 && (
+          <motion.div
+            key="techstack"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 w-full">
+              {techStacks.map((stack, index) => (
+                <div
+                  key={index}
+                  data-aos="zoom-in"
+                  data-aos-duration="500"
+                  data-aos-delay={index * 40}
+                >
+                  <TechStackIcon TechStackIcon={`/${stack.icon}`} Language={stack.language} />
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

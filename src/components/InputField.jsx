@@ -6,16 +6,14 @@ const InputField = ({ field, label, icon: Icon, formData, handleChange }) => {
   // Helper function to generate input classes dynamically
   const getInputClasses = (isTextArea = false) => {
     const baseClasses = `
-      w-full p-4 rounded-xl bg-white/10 text-white placeholder-transparent 
-      focus:outline-none focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-2 
-      focus:ring-offset-[#1c1e26] transition-all duration-300 peer
+      w-full px-5 py-3.5 rounded-xl bg-slate-900/50 text-white placeholder-slate-500 
+      border border-slate-700/50 backdrop-blur-sm
+      focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:ring-offset-2 focus:ring-offset-slate-950 
+      transition-all duration-300 peer
+      hover:border-slate-600/70
     `;
 
-    const hoverFocusClasses = isFocused
-      ? "shadow-[0_4px_12px_rgba(99,102,241,0.4)] border-[#6366f1]"
-      : "border-white/20 hover:border-[#6366f1]";
-
-    return `${baseClasses} ${hoverFocusClasses} ${isTextArea ? "h-52 pt-12" : "pl-12"}`;
+    return `${baseClasses} ${isTextArea ? "resize-none min-h-32 pt-4 pl-5" : "pl-12"}`;
   };
 
   // Render input or textarea based on the field type
@@ -32,6 +30,7 @@ const InputField = ({ field, label, icon: Icon, formData, handleChange }) => {
           onBlur={() => setIsFocused(false)}
           className={getInputClasses(true)}
           required
+          aria-label={label}
         />
       );
     }
@@ -48,6 +47,8 @@ const InputField = ({ field, label, icon: Icon, formData, handleChange }) => {
         onBlur={() => setIsFocused(false)}
         className={getInputClasses()}
         required
+        aria-label={label}
+      />
       />
     );
   };

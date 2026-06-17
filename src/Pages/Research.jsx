@@ -25,7 +25,7 @@ const publication = {
 };
 
 const Research = () => (
-  <section className="py-24 px-5 sm:px-8 lg:px-[10%] bg-[#030014]" id="Research">
+  <section className="py-20 md:py-28 px-5 sm:px-8 lg:px-[10%] bg-[#030014]" id="Research">
     {/* Section header */}
     <div className="text-center mb-14">
       <motion.span
@@ -50,7 +50,7 @@ const Research = () => (
         </span>
       </motion.h2>
       <motion.p
-        className="text-gray-500 max-w-xl mx-auto text-sm md:text-[15px] leading-relaxed"
+        className="text-slate-500 max-w-xl mx-auto text-sm md:text-base leading-relaxed"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}

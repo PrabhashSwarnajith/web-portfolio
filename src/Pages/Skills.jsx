@@ -113,7 +113,7 @@ const SkillCategory = ({ data, index }) => (
 );
 
 const Skills = () => (
-  <section className="py-24 px-5 sm:px-8 lg:px-[10%] bg-[#030014]" id="Skills">
+  <section className="py-20 md:py-28 px-5 sm:px-8 lg:px-[10%] bg-[#030014]" id="Skills">
     <div className="text-center mb-16">
       <motion.span
         className="text-xs font-mono text-indigo-400 tracking-[0.2em] uppercase mb-3 block"
@@ -137,7 +137,7 @@ const Skills = () => (
         </span>
       </motion.h2>
       <motion.p
-        className="text-gray-500 max-w-xl mx-auto text-sm md:text-[15px] leading-relaxed"
+        className="text-slate-500 max-w-xl mx-auto text-sm md:text-base leading-relaxed"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}

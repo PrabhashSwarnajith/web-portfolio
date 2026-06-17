@@ -2,26 +2,42 @@ import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const navItems = [
-  { href: "#Home", label: "Home" },
-  { href: "#About", label: "About" },
-  { href: "#Skills", label: "Skills" },
-  { href: "#Research", label: "Research" },
+  { href: "#Home",       label: "Home"       },
+  { href: "#About",      label: "About"      },
+  { href: "#Skills",     label: "Skills"     },
+  { href: "#Research",   label: "Research"   },
   { href: "#Experience", label: "Experience" },
-  { href: "#Portofolio", label: "Projects" },
-  { href: "#Contact", label: "Contact" },
+  { href: "#Portofolio", label: "Projects"   },
+  { href: "#Contact",    label: "Contact"    },
 ];
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("Home");
+/* ─── Logo mark ─────────────────────────────────────────────────────────── */
+const LogoMark = () => (
+  <div className="relative w-9 h-9 sm:w-10 sm:h-10 flex-shrink-0">
+    <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 opacity-85" />
+    <div className="absolute inset-[1.5px] rounded-[10px] bg-[#030014]" />
+    <div className="absolute top-0 right-0 w-5 h-5 rounded-xl overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-bl from-purple-400/25 to-transparent" />
+    </div>
+    <span className="relative z-10 flex items-center justify-center w-full h-full">
+      <span className="text-[12px] sm:text-[13px] font-black tracking-[-1px] bg-gradient-to-br from-white to-purple-200 bg-clip-text text-transparent select-none">
+        PS
+      </span>
+    </span>
+  </div>
+);
 
+const Navbar = () => {
+  const [isOpen,         setIsOpen]         = useState(false);
+  const [scrolled,       setScrolled]       = useState(false);
+  const [activeSection,  setActiveSection]  = useState("Home");
+
+  /* ── Active section tracker ─────────────────────────────────────────── */
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-
       const sections = navItems
-        .map((item) => {
+        .map(item => {
           const el = document.querySelector(item.href);
           if (!el) return null;
           return { id: item.href.slice(1), offset: el.offsetTop - 100, height: el.offsetHeight };
@@ -29,7 +45,7 @@ const Navbar = () => {
         .filter(Boolean);
 
       const pos = window.scrollY;
-      const active = sections.find((s) => pos >= s.offset && pos < s.offset + s.height);
+      const active = sections.find(s => pos >= s.offset && pos < s.offset + s.height);
       if (active) setActiveSection(active.id);
     };
 
@@ -38,6 +54,7 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  /* ── Body scroll lock when menu open ───────────────────────────────── */
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -46,7 +63,7 @@ const Navbar = () => {
   const scrollTo = (e, href) => {
     e.preventDefault();
     const el = document.querySelector(href);
-    if (el) window.scrollTo({ top: el.offsetTop - 72, behavior: "smooth" });
+    if (el) window.scrollTo({ top: el.offsetTop - 68, behavior: "smooth" });
     setIsOpen(false);
   };
 
@@ -54,103 +71,127 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed w-full top-0 z-50 transition-all duration-500 ${
+      className={`fixed w-full top-0 z-50 transition-all duration-300 ${
         scrolled || isOpen
-          ? "bg-[#030014]/80 backdrop-blur-xl border-b border-white/[0.06]"
-          : "bg-transparent"
+          ? "bg-[#030014]/85 backdrop-blur-xl border-b border-white/[0.06] shadow-lg shadow-black/20"
+          : "bg-transparent border-b border-transparent"
       }`}
+      role="navigation"
+      aria-label="Main navigation"
     >
-      <div className="mx-auto px-5 sm:px-8 lg:px-[8%]">
-        <div className="flex items-center justify-between h-[68px]">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="flex items-center justify-between h-16">
 
-          {/* Logo */}
+          {/* ── Logo ─────────────────────────────────────────────────── */}
           <a
             href="#Home"
-            onClick={(e) => scrollTo(e, "#Home")}
-            className="flex items-center gap-3 group"
+            onClick={e => scrollTo(e, "#Home")}
+            className="flex items-center gap-2.5 group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-lg"
+            aria-label="Prabhash Swarnajith — Home"
           >
-            <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/25 group-hover:shadow-indigo-500/50 transition-all duration-300">
-              <span className="text-white font-bold text-sm tracking-tight">PS</span>
-            </div>
-            <div className="hidden sm:flex flex-col leading-none">
-              <span className="text-white font-semibold text-sm">Prabhash</span>
-              <span className="text-gray-500 text-[10px] font-mono tracking-widest">PORTFOLIO</span>
+            <LogoMark />
+            <div className="hidden sm:flex flex-col leading-tight">
+              <span className="text-white font-bold text-sm tracking-tight group-hover:text-indigo-200 transition-colors duration-200">
+                Prabhash
+                <span className="text-indigo-400 ml-1 font-bold">Swarnajith</span>
+              </span>
+              <span className="text-slate-500 text-[10px] font-mono tracking-[0.18em] uppercase">
+                Full-Stack Dev
+              </span>
             </div>
           </a>
 
-          {/* Availability badge — desktop center */}
-          <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-            </span>
-            <span className="text-xs font-medium text-emerald-300 tracking-wide">Available for opportunities</span>
-          </div>
-
-          {/* Desktop nav links */}
-          <div className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => (
+          {/* ── Desktop nav — only ≥ 1024px (lg) ──────────────────────── */}
+          <div className="hidden lg:flex items-center gap-0.5">
+            {navItems.map(item => (
               <a
                 key={item.label}
                 href={item.href}
-                onClick={(e) => scrollTo(e, item.href)}
-                className={`relative px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                onClick={e => scrollTo(e, item.href)}
+                className={`relative px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
                   isActive(item.href)
                     ? "text-white"
-                    : "text-gray-400 hover:text-white hover:bg-white/5"
+                    : "text-slate-400 hover:text-white hover:bg-white/5"
                 }`}
+                aria-current={isActive(item.href) ? "page" : undefined}
               >
                 {item.label}
                 {isActive(item.href) && (
-                  <span className="absolute bottom-1 left-3.5 right-3.5 h-px bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" />
+                  <span className="absolute bottom-1 left-3 right-3 h-[2px] bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" />
                 )}
               </a>
             ))}
           </div>
 
-          {/* Mobile hamburger */}
+          {/* ── Availability badge — desktop only ─────────────────────── */}
+          <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+            </span>
+            <span className="text-xs font-medium text-emerald-300 tracking-wide whitespace-nowrap">
+              Available for work
+            </span>
+          </div>
+
+          {/* ── Hamburger — mobile + tablet (< 1024px) ─────────────────── */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5"
-            aria-label="Toggle menu"
+            className="lg:hidden p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
           >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {isOpen
+              ? <X    className="w-5 h-5" />
+              : <Menu className="w-5 h-5" />
+            }
           </button>
         </div>
       </div>
 
-      {/* Mobile overlay */}
+      {/* ── Mobile / tablet overlay (< 1024px) ──────────────────────────── */}
       <div
-        className={`md:hidden fixed inset-0 bg-[#030014]/97 backdrop-blur-xl transition-all duration-300 ${
+        id="mobile-menu"
+        className={`lg:hidden fixed inset-0 bg-[#030014]/98 backdrop-blur-xl transition-all duration-300 ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
-        style={{ top: "68px" }}
       >
-        <div className="px-6 py-8 space-y-1">
-          {/* Availability in mobile menu */}
-          <div className="flex items-center gap-2 px-4 py-2 mb-4 rounded-full border border-emerald-500/20 bg-emerald-500/5 w-fit">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs text-emerald-300">Available for opportunities</span>
+        {/* Offset for navbar height */}
+        <div className="pt-16 px-5 pb-8 max-h-screen overflow-y-auto">
+
+          {/* Status badge */}
+          <div className="flex items-center gap-2 px-4 py-2.5 mb-6 rounded-xl border border-emerald-500/20 bg-emerald-500/5 w-fit">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+            <span className="text-xs text-emerald-300 font-medium">Available for opportunities</span>
           </div>
 
-          {navItems.map((item, i) => (
-            <a
-              key={item.label}
-              href={item.href}
-              onClick={(e) => scrollTo(e, item.href)}
-              style={{ transitionDelay: `${i * 50}ms`, transform: isOpen ? "none" : "translateX(20px)", opacity: isOpen ? 1 : 0 }}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 ${
-                isActive(item.href)
-                  ? "bg-indigo-500/10 border border-indigo-500/20 text-white"
-                  : "text-gray-400 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              {isActive(item.href) && (
-                <span className="w-1 h-4 rounded-full bg-gradient-to-b from-indigo-400 to-purple-500" />
-              )}
-              {item.label}
-            </a>
-          ))}
+          {/* Nav links */}
+          <nav className="space-y-1">
+            {navItems.map((item, i) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={e => scrollTo(e, item.href)}
+                style={{
+                  transitionDelay: isOpen ? `${i * 45}ms` : "0ms",
+                  transform: isOpen ? "none" : "translateX(12px)",
+                  opacity: isOpen ? 1 : 0,
+                }}
+                className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+                  isActive(item.href)
+                    ? "bg-indigo-500/10 border border-indigo-500/20 text-white"
+                    : "text-slate-400 hover:text-white hover:bg-white/[0.05] border border-transparent"
+                }`}
+                aria-current={isActive(item.href) ? "page" : undefined}
+              >
+                {isActive(item.href) && (
+                  <span className="w-1 h-4 rounded-full bg-gradient-to-b from-indigo-400 to-purple-500 flex-shrink-0" />
+                )}
+                {item.label}
+              </a>
+            ))}
+          </nav>
         </div>
       </div>
     </nav>

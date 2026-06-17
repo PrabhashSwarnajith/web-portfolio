@@ -1,75 +1,67 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { Share2, User, Mail, MessageSquare, Send } from "lucide-react";
 import SocialLinks from "../components/SocialLinks";
 import Swal from "sweetalert2";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import emailjs from "@emailjs/browser";
+
+const SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const ContactPage = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const formRef = useRef(null);
+  const [formData, setFormData]     = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    AOS.init({
-      once: false,
-    });
-  }, []);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      Swal.fire({
+        title: "Configuration Missing",
+        html: "EmailJS keys are not set.<br/>Add <code>VITE_EMAILJS_*</code> variables to your <code>.env</code> file.",
+        icon: "warning",
+        confirmButtonColor: "#6366f1",
+        background: "#0d0d1f",
+        color: "#fff",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
     Swal.fire({
-      title: 'Sending Message...',
-      html: 'Please wait while we send your message',
+      title: "Sending…",
+      html: "Please wait while your message is delivered.",
       allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      }
+      background: "#0d0d1f",
+      color: "#fff",
+      didOpen: () => Swal.showLoading(),
     });
 
     try {
-      // Get form data
-      const form = e.target;
-      const formData = new FormData(form);
-
-      // Submit form
-      await form.submit();
-
-      // Show success message
-      Swal.fire({
-        title: 'Success!',
-        text: 'Your message has been sent successfully!',
-        icon: 'success',
-        confirmButtonColor: '#6366f1',
-        timer: 2000,
-        timerProgressBar: true
+      // @emailjs/browser v4 — publicKey must be passed as an options object
+      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, {
+        publicKey: PUBLIC_KEY,
       });
-
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
-      });
-    } catch (error) {
       Swal.fire({
-        title: 'Error!',
-        text: 'Something went wrong. Please try again later.',
-        icon: 'error',
-        confirmButtonColor: '#6366f1'
+        title: "Message Sent!",
+        text: "Thanks for reaching out — I'll get back to you soon.",
+        icon: "success",
+        confirmButtonColor: "#6366f1",
+        background: "#0d0d1f",
+        color: "#fff",
+        timer: 3000,
+        timerProgressBar: true,
+      });
+      setFormData({ name: "", email: "", message: "" });
+    } catch {
+      Swal.fire({
+        title: "Error",
+        text: "Something went wrong. Please try again or email me directly.",
+        icon: "error",
+        confirmButtonColor: "#6366f1",
+        background: "#0d0d1f",
+        color: "#fff",
       });
     } finally {
       setIsSubmitting(false);
@@ -77,136 +69,118 @@ const ContactPage = () => {
   };
 
   return (
-    <>
-      <div className="text-center lg:mt-[5%] mt-10 mb-2 sm:px-0 px-[5%]" id="Contact">	
-        <h2
+    <section className="py-24 px-[5%] lg:px-[10%] bg-[#030014]" id="Contact">
+      {/* Section header */}
+      <div className="text-center mb-14">
+        <span
+          className="text-xs font-mono text-indigo-400 tracking-[0.2em] uppercase mb-3 block"
           data-aos="fade-down"
-          data-aos-duration="1000"
-          className="inline-block text-3xl md:text-5xl font-bold text-center mx-auto text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]"
+          data-aos-duration="600"
         >
-          <span
-            style={{
-              color: "#6366f1",
-              backgroundImage:
-                "linear-gradient(45deg, #6366f1 10%, #a855f7 93%)",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            Contact Me
-          </span>
+          06 — Get in Touch
+        </span>
+        <h2
+          className="text-4xl md:text-5xl font-bold mb-4"
+          data-aos="fade-down"
+          data-aos-duration="800"
+        >
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+            Contact
+          </span>{" "}
+          <span className="text-white">Me</span>
         </h2>
         <p
+          className="text-gray-500 max-w-xl mx-auto text-sm md:text-[15px] leading-relaxed"
           data-aos="fade-up"
-          data-aos-duration="1100"
-          className="text-slate-400 max-w-2xl mx-auto text-sm md:text-base mt-2"
+          data-aos-duration="900"
         >
-          Got a question? Send me a message, and I'll get back to you soon.
+          Have a project in mind or just want to say hello? I'd love to hear from you.
         </p>
       </div>
 
-      <div
-        className="h-auto py-10 flex items-center justify-center px-[5%] md:px-0"
-        id="Contact"
-      >
-        <div className="container px-[1%] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-[50%_50%] 2xl:grid-cols-[50%_50%] gap-12">
-          <div
-            data-aos="fade-right"
-            data-aos-duration="1200"
-            className="bg-white/5 backdrop-blur-xl rounded-3xl shadow-2xl p-5 py-10 sm:p-10 transform transition-all duration-300 hover:shadow-[#6366f1]/10"
-          >
-            <div className="flex justify-between items-start mb-8">
-              <div>
-                <h2 className="text-4xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
-                  Get in Touch
-                </h2>
-                <p className="text-gray-400">
-                  Have something to discuss? Send me a message and let's talk.
-                </p>
-              </div>
-              <Share2 className="w-10 h-10 text-[#6366f1] opacity-50" />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        {/* ── Form card ─────────────────────────────── */}
+        <div
+          className="bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.07] p-7 sm:p-10 hover:border-indigo-500/20 transition-colors duration-300"
+          data-aos="fade-right"
+          data-aos-duration="800"
+        >
+          <div className="flex items-start justify-between mb-7">
+            <div>
+              <h3 className="text-xl font-bold text-white mb-1">Send a Message</h3>
+              <p className="text-gray-500 text-sm">I'll reply as soon as possible.</p>
+            </div>
+            <Share2 className="w-8 h-8 text-indigo-500/40 flex-shrink-0" />
+          </div>
+
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-4" noValidate>
+            {/* Name */}
+            <div className="relative group">
+              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
+              <input
+                type="text"
+                name="from_name"
+                placeholder="Your Name"
+                value={formData.name}
+                onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
+                disabled={isSubmitting}
+                required
+                className="w-full py-3.5 pl-11 pr-4 bg-white/[0.04] rounded-xl border border-white/[0.08] placeholder-gray-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/30 hover:border-white/15 transition-all duration-200 disabled:opacity-50"
+              />
             </div>
 
-            <form 
-              action="https://formsubmit.co/prabhashswarnajith@gmail.com"
-              method="POST"
-              onSubmit={handleSubmit}
-              className="space-y-6"
-            >
-              {/* FormSubmit Configuration */}
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_captcha" value="false" />
-
-              <div
-                data-aos="fade-up"
-                data-aos-delay="100"
-                className="relative group"
-              >
-                <User className="absolute left-4 top-4 w-5 h-5 text-gray-400 group-focus-within:text-[#6366f1] transition-colors" />
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your Name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  disabled={isSubmitting}
-                  className="w-full p-4 pl-12 bg-white/10 rounded-xl border border-white/20 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-[#6366f1]/30 transition-all duration-300 hover:border-[#6366f1]/30 disabled:opacity-50"
-                  required
-                />
-              </div>
-              <div
-                data-aos="fade-up"
-                data-aos-delay="200"
-                className="relative group"
-              >
-                <Mail className="absolute left-4 top-4 w-5 h-5 text-gray-400 group-focus-within:text-[#6366f1] transition-colors" />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  disabled={isSubmitting}
-                  className="w-full p-4 pl-12 bg-white/10 rounded-xl border border-white/20 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-[#6366f1]/30 transition-all duration-300 hover:border-[#6366f1]/30 disabled:opacity-50"
-                  required
-                />
-              </div>
-              <div
-                data-aos="fade-up"
-                data-aos-delay="300"
-                className="relative group"
-              >
-                <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-gray-400 group-focus-within:text-[#6366f1] transition-colors" />
-                <textarea
-                  name="message"
-                  placeholder="Your Message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  disabled={isSubmitting}
-                  className="w-full resize-none p-4 pl-12 bg-white/10 rounded-xl border border-white/20 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-[#6366f1]/30 transition-all duration-300 hover:border-[#6366f1]/30 h-[9.9rem] disabled:opacity-50"
-                  required
-                />
-              </div>
-              <button
-                data-aos="fade-up"
-                data-aos-delay="400"
-                type="submit"
+            {/* Email */}
+            <div className="relative group">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
+              <input
+                type="email"
+                name="from_email"
+                placeholder="Your Email"
+                value={formData.email}
+                onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-white py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-[#6366f1]/20 active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-              >
-                <Send className="w-5 h-5" />
-                {isSubmitting ? 'Sending...' : 'Send Message'}
-              </button>
-            </form> 
-          </div>
+                required
+                className="w-full py-3.5 pl-11 pr-4 bg-white/[0.04] rounded-xl border border-white/[0.08] placeholder-gray-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/30 hover:border-white/15 transition-all duration-200 disabled:opacity-50"
+              />
+            </div>
 
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-3 py-3 md:p-10 md:py-8 shadow-2xl transform transition-all duration-300 hover:shadow-[#6366f1]/10">
-            <SocialLinks />
-          </div>
+            {/* Message */}
+            <div className="relative group">
+              <MessageSquare className="absolute left-4 top-4 w-4 h-4 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
+              <textarea
+                name="message"
+                placeholder="Your Message"
+                value={formData.message}
+                onChange={(e) => setFormData((p) => ({ ...p, message: e.target.value }))}
+                disabled={isSubmitting}
+                required
+                rows={5}
+                className="w-full resize-none py-3.5 pl-11 pr-4 bg-white/[0.04] rounded-xl border border-white/[0.08] placeholder-gray-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/30 hover:border-white/15 transition-all duration-200 disabled:opacity-50"
+              />
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold transition-all duration-300 hover:from-indigo-500 hover:to-purple-500 hover:shadow-lg hover:shadow-indigo-500/25 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-indigo-600 disabled:hover:to-purple-600"
+            >
+              <Send className="w-4 h-4" />
+              {isSubmitting ? "Sending…" : "Send Message"}
+            </button>
+          </form>
+        </div>
+
+        {/* ── Social links card ──────────────────────── */}
+        <div
+          className="h-full"
+          data-aos="fade-left"
+          data-aos-duration="800"
+        >
+          <SocialLinks />
         </div>
       </div>
-    </>
+    </section>
   );
 };
 
