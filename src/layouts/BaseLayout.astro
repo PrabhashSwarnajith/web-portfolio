@@ -9,11 +9,41 @@ interface Props {
 
 const {
   title = 'Prabhash Swarnajith — Full-Stack Developer',
-  description = 'Portfolio of Prabhash Swarnajith — Full-Stack Developer specializing in Spring Boot, React, and cloud-native applications. Open to exciting opportunities.',
-  ogImage = 'https://www.prabhashswarnajith.tech/og-image.jpg'
+  description = 'Portfolio of Prabhash Swarnajith — Full-Stack Developer specializing in Spring Boot, React, and cloud-native applications. Currently interning at CW Cloud Solutions. Open to exciting opportunities.',
+  ogImage = 'https://www.prabhashswarnajith.tech/assets/Photo.jpg',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const siteURL = 'https://www.prabhashswarnajith.tech';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Prabhash Swarnajith',
+  url: siteURL,
+  image: `${siteURL}/assets/Photo.jpg`,
+  jobTitle: 'Full-Stack Developer',
+  description:
+    'Full-Stack Developer specializing in Spring Boot, React, and cloud-native applications.',
+  email: 'prabhashswarnajith@gmail.com',
+  sameAs: [
+    'https://github.com/PrabhashSwarnajith',
+    'https://www.linkedin.com/in/prabhash-swarnajith/',
+    'https://www.instagram.com/prabhash_swarnajith/',
+  ],
+  knowsAbout: [
+    'Spring Boot', 'React', 'Java', 'Node.js',
+    'MongoDB', 'Docker', 'TypeScript', 'Tailwind CSS',
+  ],
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Sri Lanka Institute of Information Technology',
+  },
+  worksFor: {
+    '@type': 'Organization',
+    name: 'CW Cloud Solutions',
+  },
+};
 ---
 
 <!DOCTYPE html>
@@ -25,26 +55,42 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- Primary SEO -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="Prabhash Swarnajith, Full-Stack Developer, Spring Boot, React, Portfolio, Sri Lanka" />
+    <meta name="keywords" content="Prabhash Swarnajith, Full-Stack Developer, Spring Boot, React, Java, Node.js, MongoDB, Docker, TypeScript, Portfolio, Sri Lanka, Software Engineer, CW Cloud Solutions, SLIIT" />
     <meta name="author" content="Prabhash Swarnajith" />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/assets/Photo.jpg" />
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="Prabhash Swarnajith" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@prabhash_swarnajith" />
+    <meta name="twitter:creator" content="@prabhash_swarnajith" />
     <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Theme color -->
+    <!-- Theme -->
     <meta name="theme-color" content="#030014" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="msapplication-TileColor" content="#030014" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <slot />
