@@ -14,9 +14,8 @@ export default defineConfig({
     }),
   ],
 
-  // GitHub Pages deployment
+  // Vercel deployment
   site: 'https://www.prabhashswarnajith.tech/',
-  base: '/',
 
   // Build output
   outDir: './dist',
