@@ -1,6 +1,8 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ProjectCard from "./ProjectCard";
+import Certificate from "./Certificate";
+import TechStackIcon from "./TechStackIcon";
 import { Code, Award, Boxes } from "lucide-react";
 import projectData from "../data/projects.js";
 import certificateData from "../data/certificates.js";
@@ -18,7 +20,7 @@ const ProjectShowcase = () => {
     []
   );
 
-  const getTabContent = useCallback(() => {
+  const renderContent = () => {
     switch (activeTab) {
       case "projects":
         return (
@@ -27,15 +29,15 @@ const ProjectShowcase = () => {
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
               >
                 <ProjectCard {...project} />
               </motion.div>
             ))}
           </div>
         );
+
       case "certificates":
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
@@ -43,26 +45,15 @@ const ProjectShowcase = () => {
               <motion.div
                 key={cert.id}
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
               >
-                <div className="relative group rounded-xl overflow-hidden bg-slate-900/50 border border-white/10 hover:border-indigo-500/30 transition-all duration-300 h-60 cursor-pointer">
-                  <img
-                    src={cert.Img}
-                    alt={cert.Title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                    <p className="text-white text-center text-sm font-semibold line-clamp-3">
-                      {cert.Title}
-                    </p>
-                  </div>
-                </div>
+                <Certificate certificateImage={cert.Img} title={cert.Title} />
               </motion.div>
             ))}
           </div>
         );
+
       case "tech-stack":
         return (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
@@ -70,29 +61,19 @@ const ProjectShowcase = () => {
               <motion.div
                 key={tech.name}
                 initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: i * 0.05 }}
-                className="group flex flex-col items-center gap-2 p-3 md:p-4 rounded-lg bg-slate-900/30 border border-white/10 hover:border-indigo-500/30 hover:bg-slate-900/50 transition-all duration-300"
               >
-                <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center">
-                  <img
-                    src={tech.icon}
-                    alt={tech.name}
-                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <span className="text-xs md:text-sm font-medium text-slate-400 text-center group-hover:text-indigo-300 transition-colors">
-                  {tech.name}
-                </span>
+                <TechStackIcon {...tech} />
               </motion.div>
             ))}
           </div>
         );
+
       default:
         return null;
     }
-  }, [activeTab]);
+  };
 
   return (
     <section className="py-20 md:py-28 px-5 sm:px-8 lg:px-[10%] bg-[#030014]" id="Portofolio">
@@ -120,8 +101,8 @@ const ProjectShowcase = () => {
         </motion.h2>
       </div>
 
-      {/* Tabs */}
-      <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-12 md:mb-16">
+      {/* Tabs - Horizontal scrollable on mobile */}
+      <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-12 md:mb-16 px-2">
         {TABS.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -132,15 +113,19 @@ const ProjectShowcase = () => {
               onClick={() => setActiveTab(tab.id)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`flex items-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-lg font-medium text-sm md:text-base transition-all duration-300 ${
+              className={`flex items-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-lg font-medium text-sm md:text-base whitespace-nowrap transition-all duration-300 ${
                 isActive
-                  ? "bg-indigo-600/20 text-indigo-300 border border-indigo-500/30"
-                  : "bg-slate-900/50 text-slate-400 border border-white/10 hover:bg-slate-900/80 hover:text-white"
+                  ? "bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 shadow-lg shadow-indigo-500/10"
+                  : "bg-slate-900/50 text-slate-400 border border-white/10 hover:bg-slate-900/80 hover:text-white hover:border-white/20"
               }`}
             >
-              <Icon className="w-4 h-4 md:w-5 md:h-5" />
-              <span>{tab.label}</span>
-              <span className="ml-1 px-2 py-0.5 rounded bg-white/10 text-xs font-semibold">
+              <Icon className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+              <span className="hidden sm:inline">{tab.label}</span>
+              <span className={`ml-1 px-2 py-0.5 rounded text-xs font-semibold ${
+                isActive
+                  ? "bg-indigo-500/30 text-indigo-200"
+                  : "bg-white/10 text-slate-400"
+              }`}>
                 {tab.count}
               </span>
             </motion.button>
@@ -148,7 +133,7 @@ const ProjectShowcase = () => {
         })}
       </div>
 
-      {/* Content */}
+      {/* Content with AnimatePresence for smooth transitions */}
       <div className="max-w-6xl mx-auto">
         <AnimatePresence mode="wait">
           <motion.div
@@ -158,7 +143,7 @@ const ProjectShowcase = () => {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            {getTabContent()}
+            {renderContent()}
           </motion.div>
         </AnimatePresence>
       </div>

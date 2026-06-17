@@ -197,28 +197,36 @@ const Home = () => {
             data-aos-delay="150"
           >
             {/* Fixed-height container that clips the Lottie's built-in whitespace */}
-            <div className="relative w-full h-[360px] sm:h-[440px] lg:h-[520px] xl:h-[580px] overflow-hidden rounded-2xl group">
+            <div className="relative w-full h-[360px] sm:h-[440px] lg:h-[520px] xl:h-[600px] rounded-2xl overflow-hidden group">
               {/* Gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10" />
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-purple-500/10" />
 
-              {/* Ambient glow */}
-              <div className={`absolute inset-12 bg-gradient-to-br from-indigo-500/20 to-purple-500/15 rounded-full blur-3xl transition-all duration-700 ${
-                isHovering ? "opacity-100 scale-125" : "opacity-60 scale-100"
-              }`} />
+              {/* Ambient glow - animated */}
+              <div className={`absolute inset-0 transition-all duration-700 ${
+                isHovering ? "opacity-100" : "opacity-40"
+              }`}>
+                <div className="absolute inset-20 bg-gradient-to-br from-indigo-500/30 to-purple-500/20 rounded-full blur-3xl" />
+              </div>
 
-              {/* Lottie Animation */}
-              <div className="absolute inset-0 flex items-center justify-center">
+              {/* Lottie Animation - centered and sized properly */}
+              <div className={`absolute inset-0 flex items-center justify-center transition-transform duration-500 ${
+                isHovering ? "scale-105" : "scale-100"
+              }`}>
                 <DotLottieReact
                   src="/Coding.json"
                   loop
                   autoplay
-                  style={{ width: "120%", height: "120%" }}
-                  className="transition-transform duration-500"
+                  style={{
+                    width: "110%",
+                    height: "110%",
+                    objectFit: "contain",
+                  }}
+                  className="drop-shadow-lg"
                 />
               </div>
 
-              {/* Border glow on hover */}
-              <div className="absolute inset-0 rounded-2xl border border-indigo-500/0 group-hover:border-indigo-500/20 transition-all duration-500" />
+              {/* Border effect */}
+              <div className="absolute inset-0 rounded-2xl border border-indigo-500/0 group-hover:border-indigo-500/30 transition-all duration-500 pointer-events-none" />
             </div>
           </div>
 
