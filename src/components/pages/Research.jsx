@@ -38,7 +38,7 @@ const Research = () => (
         02 — Academic Research
       </motion.span>
       <motion.h2
-        className="text-4xl md:text-5xl font-bold text-white mb-4"
+        className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4"
         initial={{ opacity: 0, y: -16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -72,7 +72,7 @@ const Research = () => (
         {/* Top accent */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent" />
 
-        <div className="p-7 sm:p-10">
+        <div className="p-5 sm:p-8 lg:p-10">
           {/* Header row */}
           <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
             <div className="flex items-start gap-4">

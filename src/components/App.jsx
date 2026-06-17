@@ -12,6 +12,7 @@ import Navbar from './Navbar';
 import Portofolio from './pages/Portofolio';
 import ContactPage from './pages/Contact';
 import WelcomeScreen from './pages/WelcomeScreen';
+import Footer from './Footer';
 import { AnimatePresence } from 'framer-motion';
 
 export default function App() {
@@ -44,6 +45,7 @@ export default function App() {
           <Education />
           <Portofolio />
           <ContactPage />
+          <Footer />
         </>
       )}
     </>

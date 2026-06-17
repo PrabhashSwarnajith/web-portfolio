@@ -18,7 +18,7 @@ const ProfileImage = memo(() => (
       <div className="absolute -inset-3 rounded-full bg-gradient-to-br from-indigo-500/30 via-purple-500/20 to-pink-500/20 blur-2xl opacity-60 group-hover:opacity-90 transition-opacity duration-700 hidden sm:block" />
 
       {/* Photo frame */}
-      <div className="relative w-60 h-60 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden ring-2 ring-white/10 group-hover:ring-indigo-500/40 transition-all duration-500 shadow-2xl shadow-indigo-500/10">
+      <div className="relative w-44 h-44 sm:w-60 sm:h-60 lg:w-80 lg:h-80 rounded-full overflow-hidden ring-2 ring-white/10 group-hover:ring-indigo-500/40 transition-all duration-500 shadow-2xl shadow-indigo-500/10">
         <img
           src={profile}
           alt="Prabhash Swarnajith"
@@ -41,7 +41,7 @@ const ProfileImage = memo(() => (
 /* ─── Stat card ─────────────────────────────────────────────────────────── */
 const StatCard = memo(({ icon: Icon, value, label, description, index }) => (
   <motion.div
-    className="group relative bg-white/[0.03] border border-white/[0.07] rounded-2xl p-5 overflow-hidden hover:border-white/15 hover:bg-white/[0.05] transition-all duration-300"
+    className="group relative bg-white/[0.03] border border-white/[0.07] rounded-2xl p-3 sm:p-5 overflow-hidden hover:border-white/15 hover:bg-white/[0.05] transition-all duration-300 cursor-pointer"
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
@@ -50,18 +50,18 @@ const StatCard = memo(({ icon: Icon, value, label, description, index }) => (
     {/* Subtle top accent */}
     <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-    <div className="flex items-start justify-between gap-3">
-      <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-white/[0.06] border border-white/[0.08] group-hover:border-indigo-500/30 transition-colors duration-300 flex-shrink-0">
-        <Icon className="w-5 h-5 text-indigo-400" />
+    <div className="flex items-start justify-between gap-2">
+      <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center bg-white/[0.06] border border-white/[0.08] group-hover:border-indigo-500/30 transition-colors duration-300 flex-shrink-0">
+        <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400" />
       </div>
-      <span className="text-3xl font-black text-white tabular-nums leading-none pt-1">
+      <span className="text-xl sm:text-3xl font-black text-white tabular-nums leading-none pt-0.5">
         {value}
       </span>
     </div>
 
-    <div className="mt-4">
-      <p className="text-sm font-semibold text-slate-300 mb-0.5">{label}</p>
-      <p className="text-xs text-slate-500 flex items-center justify-between">
+    <div className="mt-2 sm:mt-4">
+      <p className="text-xs sm:text-sm font-semibold text-slate-300 mb-0.5">{label}</p>
+      <p className="hidden sm:flex text-xs text-slate-500 items-center justify-between">
         {description}
         <ArrowUpRight className="w-3.5 h-3.5 text-slate-600 group-hover:text-indigo-400 transition-colors" />
       </p>
@@ -107,7 +107,7 @@ const AboutPage = () => {
           00 — About
         </motion.span>
         <motion.h2
-          className="text-4xl md:text-5xl font-bold text-white mb-4"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4"
           initial={{ opacity: 0, y: -16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -154,14 +154,14 @@ const AboutPage = () => {
             <a
               href={cv}
               download
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold hover:from-indigo-500 hover:to-purple-500 hover:shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+              className="inline-flex items-center justify-center gap-2 px-6 min-h-[48px] rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold hover:from-indigo-500 hover:to-purple-500 hover:shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 cursor-pointer"
             >
               <FileText className="w-4 h-4" />
               Download CV
             </a>
             <a
               href="#Portofolio"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/[0.05] border border-white/[0.1] text-slate-300 text-sm font-semibold hover:bg-white/[0.1] hover:text-white hover:border-indigo-500/30 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+              className="inline-flex items-center justify-center gap-2 px-6 min-h-[48px] rounded-xl bg-white/[0.05] border border-white/[0.1] text-slate-300 text-sm font-semibold hover:bg-white/[0.1] hover:text-white hover:border-indigo-500/30 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 cursor-pointer"
             >
               <Code className="w-4 h-4" />
               View Projects
@@ -174,8 +174,8 @@ const AboutPage = () => {
       </div>
 
       {/* ── Stat cards ─────────────────────────────────────────────── */}
-      <a href="#Portofolio" className="block mt-14 md:mt-16 max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <a href="#Portofolio" className="block mt-12 md:mt-16 max-w-5xl mx-auto cursor-pointer">
+        <div className="grid grid-cols-3 gap-3 sm:gap-4">
           {stats.map((stat, i) => (
             <StatCard key={stat.label} {...stat} index={i} />
           ))}

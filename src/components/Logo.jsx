@@ -12,7 +12,7 @@ export const LogoWithText = () => (
     <SimpleLogo />
     <div className="hidden sm:flex flex-col leading-tight">
       <span className="text-xs font-semibold text-white group-hover:text-indigo-400 transition-colors">
-        Prabhash Swarnjith
+        Prabhash Swarnajith
       </span>
       <span className="text-[10px] text-slate-400 group-hover:text-indigo-300 transition-colors">
         Developer

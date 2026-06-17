@@ -27,20 +27,29 @@ const ProjectShowcase = () => {
     getPublicRepos().then((repos) => {
       const repoByName = Object.fromEntries(repos.map((r) => [r.name, r]));
 
-      // Only show repos listed in projects.js, in the order defined there
-      const mapped = projectOverrides
-        .filter((p) => repoByName[p.repoName])
-        .map((p) => {
-          const repo = repoByName[p.repoName];
+      // Show all projects.js entries in order; merge GitHub data when available
+      const mapped = projectOverrides.map((p) => {
+        const repo = repoByName[p.repoName];
+        if (repo) {
           return {
             id: repo.id,
             Title: p.Title || repo.name.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
             Description: p.Description || repo.description || "No description provided.",
             Github: repo.html_url,
-            Link: repo.homepage || "",
+            Link: p.Link || repo.homepage || "",
             Img: p.Img || `https://opengraph.githubassets.com/1/${repo.full_name}`,
           };
-        });
+        }
+        // External / client project — no GitHub repo
+        return {
+          id: p.repoName,
+          Title: p.Title || p.repoName,
+          Description: p.Description || "No description provided.",
+          Github: p.Github || "",
+          Link: p.Link || "",
+          Img: p.Img || "",
+        };
+      });
 
       setGithubProjects(mapped);
       setLoadingProjects(false);
@@ -104,7 +113,7 @@ const ProjectShowcase = () => {
                 <button
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className="p-2 rounded-lg border border-white/10 bg-slate-900/50 text-slate-400 hover:text-white hover:border-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
+                  className="w-11 h-11 flex items-center justify-center rounded-xl border border-white/10 bg-slate-900/50 text-slate-400 hover:text-white hover:border-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
@@ -113,7 +122,7 @@ const ProjectShowcase = () => {
                   <button
                     key={page}
                     onClick={() => handlePageChange(page)}
-                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    className={`w-11 h-11 rounded-xl text-sm font-medium transition-all duration-200 ${
                       page === currentPage
                         ? "bg-indigo-600/30 text-indigo-300 border border-indigo-500/40"
                         : "border border-white/10 bg-slate-900/50 text-slate-400 hover:text-white hover:border-white/20"
@@ -126,7 +135,7 @@ const ProjectShowcase = () => {
                 <button
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
-                  className="p-2 rounded-lg border border-white/10 bg-slate-900/50 text-slate-400 hover:text-white hover:border-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
+                  className="w-11 h-11 flex items-center justify-center rounded-xl border border-white/10 bg-slate-900/50 text-slate-400 hover:text-white hover:border-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -199,7 +208,7 @@ const ProjectShowcase = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          04 — Portfolio
+          05 — Portfolio
         </motion.span>
         <motion.h2
           className="text-4xl md:text-5xl font-bold text-white mb-4"
@@ -227,7 +236,7 @@ const ProjectShowcase = () => {
               onClick={() => setActiveTab(tab.id)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`flex items-center gap-2 px-4 md:px-6 py-3 md:py-3 rounded-lg font-medium text-sm md:text-base whitespace-nowrap transition-all duration-300 ${
+              className={`flex items-center gap-2 px-4 md:px-6 py-3 rounded-lg font-medium text-sm md:text-base whitespace-nowrap transition-all duration-300 min-h-[44px] cursor-pointer ${
                 isActive
                   ? "bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 shadow-lg shadow-indigo-500/10"
                   : "bg-slate-900/50 text-slate-400 border border-white/10 hover:bg-slate-900/80 hover:text-white hover:border-white/20"

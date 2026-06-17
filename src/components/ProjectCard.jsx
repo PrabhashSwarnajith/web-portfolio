@@ -5,10 +5,10 @@ const ProjectCard = ({ Img, Title, Description, Link: ProjectLink, Github: Githu
   const [isImageLoading, setIsImageLoading] = useState(true);
 
   return (
-    <div className="group relative w-full h-full">
-      <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-xl border border-white/10 shadow-lg transition-all duration-300 hover:shadow-2xl hover:shadow-primary-500/20 hover:border-primary-400/30">
+    <div className="group relative w-full h-full cursor-pointer">
+      <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-xl border border-white/10 shadow-lg transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/15 hover:border-indigo-500/25">
 
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-secondary-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
         <div className="relative flex flex-col h-full p-6 z-10">
 
@@ -30,7 +30,7 @@ const ProjectCard = ({ Img, Title, Description, Link: ProjectLink, Github: Githu
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 rounded-xl"></div>
           </div>
 
-          <h3 className="text-lg md:text-xl font-bold mb-3 leading-tight line-clamp-2 bg-gradient-to-r from-primary-300 via-secondary-300 to-pink-300 bg-clip-text text-transparent group-hover:from-primary-200 group-hover:via-secondary-200 group-hover:to-pink-200 transition-all duration-300">
+          <h3 className="text-lg md:text-xl font-bold mb-3 leading-tight line-clamp-2 bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 bg-clip-text text-transparent group-hover:from-indigo-200 group-hover:via-purple-200 group-hover:to-pink-200 transition-all duration-300">
             {Title}
           </h3>
 
@@ -38,13 +38,13 @@ const ProjectCard = ({ Img, Title, Description, Link: ProjectLink, Github: Githu
             {Description}
           </p>
 
-          <div className="pt-5 mt-5 border-t border-white/10 flex items-center gap-2.5">
+          <div className="pt-4 mt-4 border-t border-white/10 flex items-center gap-2.5">
             {GithubLink && (
               <a
                 href={GithubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all duration-200 font-medium text-sm border border-white/10 hover:border-white/20"
+                className="inline-flex items-center justify-center gap-1.5 px-3.5 min-h-[44px] rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all duration-200 font-medium text-sm border border-white/10 hover:border-white/20 cursor-pointer"
                 aria-label={`View source code of ${Title} on GitHub`}
               >
                 <Github className="w-4 h-4" />
@@ -57,11 +57,11 @@ const ProjectCard = ({ Img, Title, Description, Link: ProjectLink, Github: Githu
                 href={ProjectLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary-600/20 hover:bg-primary-600/40 text-primary-300 hover:text-primary-200 transition-all duration-200 font-medium text-sm border border-primary-500/20 hover:border-primary-400/50"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-4 min-h-[44px] rounded-xl bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 hover:text-indigo-200 transition-all duration-200 font-medium text-sm border border-indigo-500/20 hover:border-indigo-400/50 cursor-pointer"
                 aria-label={`View live demo of ${Title}`}
               >
                 <span>Live Demo</span>
-                <ExternalLink className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
+                <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </a>
             )}
           </div>

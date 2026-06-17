@@ -47,7 +47,7 @@ const Certificate = ({ certificateImage, title }) => {
 						<button
 							onClick={() => setOpen(false)}
 							aria-label="Close"
-							className="absolute top-3 right-3 z-10 p-2 text-white bg-black/65 hover:bg-black/85 rounded-lg transition-all duration-300 hover:rotate-90 hover:scale-110"
+							className="absolute top-3 right-3 z-10 flex items-center justify-center min-w-[44px] min-h-[44px] text-white bg-black/65 hover:bg-black/85 rounded-lg transition-all duration-300 hover:rotate-90 hover:scale-110"
 						>
 							<X className="w-6 h-6" />
 						</button>

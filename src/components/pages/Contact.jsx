@@ -79,7 +79,7 @@ const ContactPage = () => {
           06 — Get in Touch
         </span>
         <h2
-          className="text-4xl md:text-5xl font-bold mb-4"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
           data-aos="fade-down"
           data-aos-delay="50"
         >
@@ -100,7 +100,7 @@ const ContactPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
         {/* ── Form card ─────────────────────────────── */}
         <div
-          className="bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.07] p-4 sm:p-7 lg:p-10 hover:border-indigo-500/20 transition-colors duration-300"
+          className="bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.07] p-5 sm:p-7 lg:p-10 hover:border-indigo-500/20 transition-colors duration-300"
           data-aos="fade-right"
         >
           <div className="flex items-start justify-between mb-7">
@@ -114,8 +114,10 @@ const ContactPage = () => {
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-4" noValidate>
             {/* Name */}
             <div className="relative group">
-              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
+              <label htmlFor="contact-name" className="sr-only">Your Name</label>
+              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-focus-within:text-indigo-400 transition-colors pointer-events-none" />
               <input
+                id="contact-name"
                 type="text"
                 name="from_name"
                 placeholder="Your Name"
@@ -123,14 +125,17 @@ const ContactPage = () => {
                 onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
                 disabled={isSubmitting}
                 required
-                className="w-full py-3.5 pl-11 pr-4 bg-white/[0.04] rounded-xl border border-white/[0.08] placeholder-gray-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/30 hover:border-white/15 transition-all duration-200 disabled:opacity-50"
+                autoComplete="name"
+                className="w-full py-3.5 pl-11 pr-4 bg-white/[0.04] rounded-xl border border-white/[0.08] placeholder-gray-600 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/30 hover:border-white/15 transition-all duration-200 disabled:opacity-50 min-h-[48px]"
               />
             </div>
 
             {/* Email */}
             <div className="relative group">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
+              <label htmlFor="contact-email" className="sr-only">Your Email</label>
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-focus-within:text-indigo-400 transition-colors pointer-events-none" />
               <input
+                id="contact-email"
                 type="email"
                 name="from_email"
                 placeholder="Your Email"
@@ -138,14 +143,17 @@ const ContactPage = () => {
                 onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
                 disabled={isSubmitting}
                 required
-                className="w-full py-3.5 pl-11 pr-4 bg-white/[0.04] rounded-xl border border-white/[0.08] placeholder-gray-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/30 hover:border-white/15 transition-all duration-200 disabled:opacity-50"
+                autoComplete="email"
+                className="w-full py-3.5 pl-11 pr-4 bg-white/[0.04] rounded-xl border border-white/[0.08] placeholder-gray-600 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/30 hover:border-white/15 transition-all duration-200 disabled:opacity-50 min-h-[48px]"
               />
             </div>
 
             {/* Message */}
             <div className="relative group">
-              <MessageSquare className="absolute left-4 top-4 w-4 h-4 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
+              <label htmlFor="contact-message" className="sr-only">Your Message</label>
+              <MessageSquare className="absolute left-4 top-4 w-4 h-4 text-gray-600 group-focus-within:text-indigo-400 transition-colors pointer-events-none" />
               <textarea
+                id="contact-message"
                 name="message"
                 placeholder="Your Message"
                 value={formData.message}
@@ -153,7 +161,7 @@ const ContactPage = () => {
                 disabled={isSubmitting}
                 required
                 rows={5}
-                className="w-full resize-none py-3.5 pl-11 pr-4 bg-white/[0.04] rounded-xl border border-white/[0.08] placeholder-gray-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/30 hover:border-white/15 transition-all duration-200 disabled:opacity-50"
+                className="w-full resize-none py-3.5 pl-11 pr-4 bg-white/[0.04] rounded-xl border border-white/[0.08] placeholder-gray-600 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/30 hover:border-white/15 transition-all duration-200 disabled:opacity-50"
               />
             </div>
 
@@ -161,7 +169,7 @@ const ContactPage = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold transition-all duration-300 hover:from-indigo-500 hover:to-purple-500 hover:shadow-lg hover:shadow-indigo-500/25 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-indigo-600 disabled:hover:to-purple-600"
+              className="w-full flex items-center justify-center gap-2 min-h-[48px] py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold transition-all duration-300 hover:from-indigo-500 hover:to-purple-500 hover:shadow-lg hover:shadow-indigo-500/25 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-indigo-600 disabled:hover:to-purple-600"
             >
               <Send className="w-4 h-4" />
               {isSubmitting ? "Sending…" : "Send Message"}

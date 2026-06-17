@@ -87,7 +87,7 @@ const SkillBar = ({ name, level, dot }) => {
 
 const SkillCategory = ({ data, index }) => (
   <motion.div
-    className="group relative bg-white/[0.03] border border-white/[0.07] rounded-2xl p-6 hover:border-white/[0.13] hover:bg-white/[0.05] transition-all duration-300"
+    className="group relative bg-white/[0.03] border border-white/[0.07] rounded-2xl p-4 sm:p-6 hover:border-white/[0.13] hover:bg-white/[0.05] transition-all duration-300"
     initial={{ opacity: 0, y: 24 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
@@ -125,7 +125,7 @@ const Skills = () => (
         01 — Technical
       </motion.span>
       <motion.h2
-        className="text-4xl md:text-5xl font-bold text-white mb-4"
+        className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4"
         initial={{ opacity: 0, y: -16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}

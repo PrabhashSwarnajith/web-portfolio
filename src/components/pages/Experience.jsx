@@ -59,7 +59,7 @@ const ExperienceCard = ({ data, index }) => {
       </div>
 
       {/* Card */}
-      <div className="group relative bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10 border-l-[3px] border-l-indigo-500/60 hover:border-white/20 hover:border-l-indigo-400 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 overflow-hidden">
+      <div className="group relative bg-white/5 backdrop-blur-lg rounded-2xl p-4 sm:p-6 border border-white/10 border-l-[3px] border-l-indigo-500/60 hover:border-white/20 hover:border-l-indigo-400 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 overflow-hidden">
         {/* Hover glow */}
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-400 rounded-2xl" />
 
@@ -141,7 +141,7 @@ const Experience = () => {
           <span className="text-xs font-mono text-indigo-400 tracking-[0.2em] uppercase mb-3 block">
             03 — Professional
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
             Work{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
               Experience

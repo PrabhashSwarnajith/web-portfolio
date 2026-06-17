@@ -57,10 +57,10 @@ const EducationCard = ({ data, index }) => {
             : "bg-gradient-to-br from-purple-500/5 to-fuchsia-500/5"}`}
       />
 
-      {/* Floating emoji backdrop */}
-      <span className="absolute right-4 bottom-4 text-9xl select-none pointer-events-none opacity-[0.07] leading-none">
-        {data.icon}
-      </span>
+      {/* Decorative geometric backdrop */}
+      <div className={`absolute right-4 bottom-4 w-20 h-20 rounded-2xl pointer-events-none opacity-[0.07] bg-gradient-to-br ${
+        featured ? "from-indigo-400 to-purple-500" : "from-purple-400 to-fuchsia-500"
+      }`} />
 
       <div className="relative z-10 p-6">
         {/* Featured indicator */}
@@ -134,7 +134,7 @@ const Education = () => {
           <span className="text-xs font-mono text-indigo-400 tracking-[0.2em] uppercase mb-3 block">
             04 — Academic
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
             Education &amp;{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
               Background
