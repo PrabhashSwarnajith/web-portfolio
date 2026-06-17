@@ -44,7 +44,7 @@ const ExperienceCard = ({ data, index }) => {
       className="relative pl-10 sm:pl-16"
       initial={{ opacity: 0, x: -24 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.55, delay: index * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
       {/* Timeline dot */}
       <div className="absolute left-0 sm:left-1 top-5 z-10 flex items-center justify-center">

@@ -29,7 +29,7 @@
     "@splinetool/runtime": "^1.9.37",
     "add": "^2.0.6",
     "aos": "^2.3.4",
-    "astro": "^6.4.7",
+    "astro": "^5.18.2",
     "clsx": "^2.1.1",
     "dialog": "^0.3.1",
     "firebase": "^11.0.1",

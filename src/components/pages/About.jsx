@@ -1,17 +1,16 @@
-import React, { memo, useMemo } from "react"
+import React, { memo, useMemo, useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { FileText, Code, Award, Globe, ArrowUpRight } from "lucide-react"
 const profile = "/assets/Photo.jpg"
 const cv = "/assets/Prabhash Swarnajith - Resume.pdf"
-import projectData from "../../data/projects.js"
-import certificateData from "../../data/certificates.js"
+import { getPublicRepos, getCertificates } from "../../utils/github.js"
 
 /* ─── Profile image ─────────────────────────────────────────────────────── */
 const ProfileImage = memo(() => (
   <div
     className="flex justify-center lg:justify-end"
     data-aos="fade-left"
-    data-aos-duration="800"
+    data-aos-duration="500"
   >
     <div className="relative group">
       {/* Ambient ring */}
@@ -45,7 +44,7 @@ const StatCard = memo(({ icon: Icon, value, label, description, index }) => (
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    transition={{ duration: 0.45, delay: index * 0.1 }}
+    transition={{ duration: 0.5, delay: index * 0.1 }}
   >
     {/* Subtle top accent */}
     <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -71,23 +70,26 @@ const StatCard = memo(({ icon: Icon, value, label, description, index }) => (
 
 /* ─── Page component ─────────────────────────────────────────────────────── */
 const AboutPage = () => {
-  const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
+  const [repoCount, setRepoCount] = useState("…")
+  const [certCount, setCertCount] = useState("…")
+
+  useEffect(() => {
+    getGitHubStats().then((stats) => setRepoCount(stats.repositories));
+    setCertCount(certificateData.length);
+  }, [])
+
+  const YearExperience = useMemo(() => {
     const start = new Date("2023-11-06")
     const now   = new Date()
-    const yrs   = now.getFullYear() - start.getFullYear() -
+    return now.getFullYear() - start.getFullYear() -
       (now < new Date(now.getFullYear(), start.getMonth(), start.getDate()) ? 1 : 0)
-    return {
-      totalProjects:    projectData.length,
-      totalCertificates: certificateData.length,
-      YearExperience:   yrs,
-    }
   }, [])
 
   const stats = useMemo(() => [
-    { icon: Code,  value: totalProjects,    label: "Projects Built",    description: "Web solutions shipped" },
-    { icon: Award, value: totalCertificates, label: "Certifications",    description: "Skills validated"      },
-    { icon: Globe, value: YearExperience,   label: "Years Experience",  description: "Continuous learning"   },
-  ], [totalProjects, totalCertificates, YearExperience])
+    { icon: Code,  value: repoCount,      label: "Projects Built",   description: "Public repos on GitHub" },
+    { icon: Award, value: certCount,      label: "Certifications",   description: "Skills validated"       },
+    { icon: Globe, value: YearExperience, label: "Years Experience", description: "Continuous learning"    },
+  ], [repoCount, certCount, YearExperience])
 
   return (
     <section className="py-20 md:py-28 px-5 sm:px-8 lg:px-[10%] bg-[#030014]" id="About">
@@ -130,7 +132,7 @@ const AboutPage = () => {
       <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-5xl mx-auto">
 
         {/* Left — text */}
-        <div className="space-y-6" data-aos="fade-right" data-aos-duration="800">
+        <div className="space-y-6" data-aos="fade-right" data-aos-duration="500">
           <div>
             <p className="text-xl sm:text-2xl font-semibold text-indigo-400 mb-1">Hello, I'm</p>
             <h3 className="text-3xl sm:text-4xl font-bold text-white leading-tight">
@@ -147,7 +149,7 @@ const AboutPage = () => {
           </p>
 
           {/* CTA buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-2" data-aos="fade-up" data-aos-duration="800">
+          <div className="flex flex-col sm:flex-row gap-3 pt-2" data-aos="fade-up" data-aos-duration="500">
             <a
               href={cv}
               download

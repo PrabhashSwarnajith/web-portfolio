@@ -28,7 +28,7 @@ const AnimatedBackground = () => {
 	}, [])
 
 	return (
-		<div className="fixed inset-0 ">
+		<div className="fixed inset-0 pointer-events-none">
 			<div className="absolute inset-0">
 				<div
 					ref={(ref) => (blobRefs.current[0] = ref)}

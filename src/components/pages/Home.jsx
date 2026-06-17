@@ -110,7 +110,7 @@ const Home = () => {
           <div
             className="w-full lg:w-[54%] flex flex-col gap-5 lg:gap-6"
             data-aos="fade-right"
-            data-aos-duration="700"
+            data-aos-duration="500"
           >
             {/* Greeting chip */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-indigo-500/20 bg-indigo-500/5 w-fit">
@@ -187,17 +187,17 @@ const Home = () => {
             </div>
           </div>
 
-          {/* ── RIGHT — Lottie animation (hidden on mobile) ─── */}
+          {/* ── RIGHT — Lottie animation ─── */}
           <div
-            className="hidden md:flex w-full lg:w-[46%] items-center justify-center"
+            className="flex w-full lg:w-[46%] items-center justify-center"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
             data-aos="fade-left"
-            data-aos-duration="700"
+            data-aos-duration="500"
             data-aos-delay="150"
           >
             {/* Fixed-height container that clips the Lottie's built-in whitespace */}
-            <div className="relative w-full h-[360px] sm:h-[440px] lg:h-[520px] xl:h-[600px] rounded-2xl overflow-hidden group">
+            <div className="relative w-full h-[220px] sm:h-[320px] md:h-[400px] lg:h-[500px] xl:h-[580px] rounded-2xl overflow-hidden group">
               {/* Gradient background */}
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-purple-500/10" />
 

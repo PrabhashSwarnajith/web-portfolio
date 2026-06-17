@@ -18,7 +18,7 @@ export default function App() {
   const [showWelcome, setShowWelcome] = useState(true);
 
   useEffect(() => {
-    AOS.init({ once: true, offset: 10 });
+    AOS.init({ once: true, offset: 10, duration: 500, easing: 'ease-out-cubic' });
     const onResize = () => AOS.refresh();
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);

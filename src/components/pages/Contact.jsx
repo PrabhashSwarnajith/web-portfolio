@@ -69,20 +69,19 @@ const ContactPage = () => {
   };
 
   return (
-    <section className="py-24 px-[5%] lg:px-[10%] bg-[#030014]" id="Contact">
+    <section className="py-16 sm:py-24 px-4 sm:px-8 lg:px-[10%] bg-[#030014]" id="Contact">
       {/* Section header */}
       <div className="text-center mb-14">
         <span
           className="text-xs font-mono text-indigo-400 tracking-[0.2em] uppercase mb-3 block"
           data-aos="fade-down"
-          data-aos-duration="600"
         >
           06 — Get in Touch
         </span>
         <h2
           className="text-4xl md:text-5xl font-bold mb-4"
           data-aos="fade-down"
-          data-aos-duration="800"
+          data-aos-delay="50"
         >
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
             Contact
@@ -92,7 +91,7 @@ const ContactPage = () => {
         <p
           className="text-gray-500 max-w-xl mx-auto text-sm md:text-[15px] leading-relaxed"
           data-aos="fade-up"
-          data-aos-duration="900"
+          data-aos-delay="100"
         >
           Have a project in mind or just want to say hello? I'd love to hear from you.
         </p>
@@ -101,9 +100,8 @@ const ContactPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
         {/* ── Form card ─────────────────────────────── */}
         <div
-          className="bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.07] p-7 sm:p-10 hover:border-indigo-500/20 transition-colors duration-300"
+          className="bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.07] p-4 sm:p-7 lg:p-10 hover:border-indigo-500/20 transition-colors duration-300"
           data-aos="fade-right"
-          data-aos-duration="800"
         >
           <div className="flex items-start justify-between mb-7">
             <div>
@@ -175,7 +173,6 @@ const ContactPage = () => {
         <div
           className="h-full"
           data-aos="fade-left"
-          data-aos-duration="800"
         >
           <SocialLinks />
         </div>

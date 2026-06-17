@@ -1,40 +1,89 @@
 const GITHUB_USERNAME = 'PrabhashSwarnajith';
-const GITHUB_API = 'https://api.github.com/users/' + GITHUB_USERNAME;
+const CERTIFICATES_REPO = 'certificates';
+const CERT_TOKEN = import.meta.env.PUBLIC_GITHUB_CERT_TOKEN || '';
 
-export const getGitHubStats = async () => {
-  try {
-    const response = await fetch(GITHUB_API);
-    if (!response.ok) throw new Error('Failed to fetch');
+const IMAGE_EXT = /\.(png|jpg|jpeg|webp|svg)$/i;
 
-    const data = await response.json();
-    return {
-      repositories: data.public_repos,
-      followers: data.followers,
-      following: data.following,
-      location: data.location,
-    };
-  } catch (error) {
-    console.error('Error fetching GitHub stats:', error);
-    return {
-      repositories: 0,
-      followers: 0,
-      following: 0,
-      location: null,
-    };
-  }
+const authHeaders = () =>
+  CERT_TOKEN ? { Authorization: `Bearer ${CERT_TOKEN}` } : {};
+
+// Promise cache — each key is only ever fetched once per page load
+const _cache = {};
+const fetchOnce = (key, fn) => {
+  if (!_cache[key]) _cache[key] = fn();
+  return _cache[key];
 };
 
-export const getGitHubRepositories = async () => {
-  try {
-    const response = await fetch(
-      `${GITHUB_API}/repos?type=owner&sort=updated&per_page=100`
-    );
-    if (!response.ok) throw new Error('Failed to fetch');
+// ── Public repos ─────────────────────────────────────────────────────────────
 
-    const repos = await response.json();
-    return repos.filter(repo => !repo.fork).slice(0, 6);
-  } catch (error) {
-    console.error('Error fetching repositories:', error);
-    return [];
-  }
+export const getPublicRepos = () =>
+  fetchOnce('repos', async () => {
+    try {
+      const res = await fetch(
+        `https://api.github.com/users/${GITHUB_USERNAME}/repos?type=owner&sort=updated&per_page=100`,
+        { headers: authHeaders() }
+      );
+      if (!res.ok) throw new Error(`GitHub ${res.status}`);
+      const data = await res.json();
+      if (!Array.isArray(data)) throw new Error('Unexpected response');
+      return data.filter((r) => !r.fork && !r.private);
+    } catch (err) {
+      console.error('Failed to fetch repos:', err);
+      return [];
+    }
+  });
+
+// ── Certificates (private repo) ───────────────────────────────────────────────
+
+const getMime = (name) => {
+  if (/\.png$/i.test(name)) return 'image/png';
+  if (/\.svg$/i.test(name)) return 'image/svg+xml';
+  if (/\.webp$/i.test(name)) return 'image/webp';
+  return 'image/jpeg';
 };
+
+export const getCertificates = () =>
+  fetchOnce('certs', async () => {
+    try {
+      const listRes = await fetch(
+        `https://api.github.com/repos/${GITHUB_USERNAME}/${CERTIFICATES_REPO}/contents`,
+        { headers: authHeaders() }
+      );
+      if (!listRes.ok) throw new Error(`GitHub ${listRes.status}`);
+      const files = await listRes.json();
+
+      // Deduplicate by sha before fetching content
+      const seenShas = new Set();
+      const imageFiles = files.filter((f) => {
+        if (f.type !== 'file' || !IMAGE_EXT.test(f.name)) return false;
+        if (seenShas.has(f.sha)) return false;
+        seenShas.add(f.sha);
+        return true;
+      });
+
+      const certs = await Promise.all(
+        imageFiles.map(async (f) => {
+          try {
+            const fileRes = await fetch(f.url, { headers: authHeaders() });
+            if (!fileRes.ok) throw new Error();
+            const fileData = await fileRes.json();
+            return {
+              id: f.sha,
+              Title: f.name
+                .replace(/\.[^.]+$/, '')
+                .replace(/[-_]/g, ' ')
+                .replace(/\b\w/g, (c) => c.toUpperCase()),
+              Img: `data:${getMime(f.name)};base64,${fileData.content.replace(/\n/g, '')}`,
+            };
+          } catch {
+            return null;
+          }
+        })
+      );
+
+      return certs.filter(Boolean);
+    } catch (err) {
+      console.error('Failed to fetch certificates:', err);
+      return [];
+    }
+  });
