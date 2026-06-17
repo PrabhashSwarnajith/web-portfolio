@@ -197,31 +197,28 @@ const Home = () => {
             data-aos-delay="150"
           >
             {/* Fixed-height container that clips the Lottie's built-in whitespace */}
-            <div className="relative w-full h-[360px] sm:h-[440px] lg:h-[520px] xl:h-[580px]">
-              {/* Ambient glow behind animation */}
-              <div className={`absolute inset-8 bg-gradient-to-br from-indigo-500/15 to-purple-500/15 rounded-full blur-3xl transition-all duration-700 ${
-                isHovering ? "opacity-80 scale-110" : "opacity-40 scale-100"
+            <div className="relative w-full h-[360px] sm:h-[440px] lg:h-[520px] xl:h-[580px] overflow-hidden rounded-2xl group">
+              {/* Gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10" />
+
+              {/* Ambient glow */}
+              <div className={`absolute inset-12 bg-gradient-to-br from-indigo-500/20 to-purple-500/15 rounded-full blur-3xl transition-all duration-700 ${
+                isHovering ? "opacity-100 scale-125" : "opacity-60 scale-100"
               }`} />
 
-              {/* Lottie — scaled up to crop internal padding */}
-              <div
-                className={`absolute inset-0 flex items-center justify-center transition-transform duration-500 ${
-                  isHovering ? "scale-[1.03]" : "scale-100"
-                }`}
-                style={{ overflow: "hidden" }}
-              >
+              {/* Lottie Animation */}
+              <div className="absolute inset-0 flex items-center justify-center">
                 <DotLottieReact
                   src="/Coding.json"
                   loop
                   autoplay
-                  style={{ width: "100%", height: "100%" }}
-                  className={`w-full h-full object-contain transition-all duration-500 ${
-                    isHovering
-                      ? "scale-[148%] sm:scale-[144%] lg:scale-[140%]"
-                      : "scale-[145%] sm:scale-[141%] lg:scale-[137%]"
-                  }`}
+                  style={{ width: "120%", height: "120%" }}
+                  className="transition-transform duration-500"
                 />
               </div>
+
+              {/* Border glow on hover */}
+              <div className="absolute inset-0 rounded-2xl border border-indigo-500/0 group-hover:border-indigo-500/20 transition-all duration-500" />
             </div>
           </div>
 
