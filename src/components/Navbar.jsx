@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { SimpleLogo } from "./Logo";
 
 const navItems = [
   { href: "#Home",       label: "Home"       },
@@ -10,22 +11,6 @@ const navItems = [
   { href: "#Portofolio", label: "Projects"   },
   { href: "#Contact",    label: "Contact"    },
 ];
-
-/* ─── Logo mark ─────────────────────────────────────────────────────────── */
-const LogoMark = () => (
-  <div className="relative w-9 h-9 sm:w-10 sm:h-10 flex-shrink-0">
-    <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 opacity-85" />
-    <div className="absolute inset-[1.5px] rounded-[10px] bg-[#030014]" />
-    <div className="absolute top-0 right-0 w-5 h-5 rounded-xl overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-bl from-purple-400/25 to-transparent" />
-    </div>
-    <span className="relative z-10 flex items-center justify-center w-full h-full">
-      <span className="text-[12px] sm:text-[13px] font-black tracking-[-1px] bg-gradient-to-br from-white to-purple-200 bg-clip-text text-transparent select-none">
-        PS
-      </span>
-    </span>
-  </div>
-);
 
 const Navbar = () => {
   const [isOpen,         setIsOpen]         = useState(false);
@@ -89,14 +74,13 @@ const Navbar = () => {
             className="flex items-center gap-2.5 group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-lg"
             aria-label="Prabhash Swarnajith — Home"
           >
-            <LogoMark />
+            <SimpleLogo />
             <div className="hidden sm:flex flex-col leading-tight">
               <span className="text-white font-bold text-sm tracking-tight group-hover:text-indigo-200 transition-colors duration-200">
                 Prabhash
-                <span className="text-indigo-400 ml-1 font-bold">Swarnajith</span>
               </span>
-              <span className="text-slate-500 text-[10px] font-mono tracking-[0.18em] uppercase">
-                Full-Stack Dev
+              <span className="text-slate-400 text-[10px] font-medium tracking-wide">
+                Full-Stack Developer
               </span>
             </div>
           </a>
