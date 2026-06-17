@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar';
+import AnimatedBackground from '../components/Background';
+import Experience from '../components/pages/Experience';
+
+const title = 'Experience - Prabhash Swarnajith';
+const description = 'Professional experience and career timeline.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Navbar client:only="react" />
+  <AnimatedBackground client:only="react" />
+  <Experience client:only="react" />
+</BaseLayout>

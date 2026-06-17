@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { ExternalLink, ArrowRight, Github } from 'lucide-react';
 
 const ProjectCard = ({ Img, Title, Description, Link: ProjectLink, Github: GithubLink, id }) => {
@@ -80,14 +79,14 @@ const ProjectCard = ({ Img, Title, Description, Link: ProjectLink, Github: Githu
             )}
 
             {id ? (
-              <Link
-                to={`/project/${id}`}
+              <a
+                href={`/portfolio#project-${id}`}
                 className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-lg bg-secondary-600/20 hover:bg-secondary-600/40 text-secondary-300 hover:text-secondary-200 transition-all duration-200 font-medium text-sm border border-secondary-500/20 hover:border-secondary-400/50 group/btn focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary-500"
                 aria-label={`View details for ${Title}`}
               >
                 <span className="hidden sm:inline">Details</span>
                 <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
-              </Link>
+              </a>
             ) : null}
           </div>
         </div>
