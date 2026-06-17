@@ -1,9 +1,10 @@
 import React, { memo, useMemo, useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { FileText, Code, Award, Globe, ArrowUpRight } from "lucide-react"
+import { getPublicRepos, getCertificates } from "../../utils/github.js"
+
 const profile = "/assets/Photo.jpg"
 const cv = "/assets/Prabhash Swarnajith - Resume.pdf"
-import { getPublicRepos, getCertificates } from "../../utils/github.js"
 
 /* ─── Profile image ─────────────────────────────────────────────────────── */
 const ProfileImage = memo(() => (
@@ -74,8 +75,8 @@ const AboutPage = () => {
   const [certCount, setCertCount] = useState("…")
 
   useEffect(() => {
-    getGitHubStats().then((stats) => setRepoCount(stats.repositories));
-    setCertCount(certificateData.length);
+    getPublicRepos().then((repos) => setRepoCount(repos.length))
+    getCertificates().then((certs) => setCertCount(certs.length))
   }, [])
 
   const YearExperience = useMemo(() => {
