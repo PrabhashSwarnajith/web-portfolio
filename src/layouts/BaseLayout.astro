@@ -1,0 +1,58 @@
+---
+import '../styles.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'Prabhash Swarnajith — Full-Stack Developer',
+  description = 'Portfolio of Prabhash Swarnajith — Full-Stack Developer specializing in Spring Boot, React, and cloud-native applications. Open to exciting opportunities.',
+  ogImage = 'https://www.prabhashswarnajith.tech/og-image.jpg'
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="Prabhash Swarnajith, Full-Stack Developer, Spring Boot, React, Portfolio, Sri Lanka" />
+    <meta name="author" content="Prabhash Swarnajith" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Theme color -->
+    <meta name="theme-color" content="#030014" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  html {
+    color-scheme: dark;
+  }
+</style>

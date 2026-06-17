@@ -5,13 +5,15 @@
   "homepage": "https://prabhashswarnajith.github.io",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "astro dev",
+    "build": "astro build",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "astro preview",
     "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
+    "@astrojs/react": "^5.0.7",
+    "@astrojs/tailwind": "^6.0.2",
     "@emailjs/browser": "^4.4.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
@@ -27,6 +29,7 @@
     "@splinetool/runtime": "^1.9.37",
     "add": "^2.0.6",
     "aos": "^2.3.4",
+    "astro": "^6.4.7",
     "clsx": "^2.1.1",
     "dialog": "^0.3.1",
     "firebase": "^11.0.1",

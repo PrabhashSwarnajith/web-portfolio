@@ -1,21 +1,21 @@
-const javaImg = "/assets/certicates/Java.png";
+import java from "../assets/certicates/Java.png";
 const certificates = [
     {
       id: 1,
       Title: "Java Programming and Software Engineering Fundamentals",
-      Img: javaImg,
+      Img: java,
     },
     {
       id: 2,
       Title: "Java Programming and Software Engineering Fundamentals",
-      Img: javaImg,
+      Img: java,
     },
     {
       id: 3,
       Title: "Java Programming and Software Engineering Fundamentals",
-      Img: javaImg,
+      Img: java,
     },
-
+   
   ];
   
   export default certificates;

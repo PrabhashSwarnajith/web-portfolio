@@ -1,167 +1,65 @@
 import React, { useState } from "react"
-import { Modal, IconButton, Box, Zoom } from "@mui/material"
-import CloseIcon from "@mui/icons-material/Close"
-import FullscreenIcon from "@mui/icons-material/Fullscreen"
+import { X, Maximize2 } from "lucide-react"
 
 const Certificate = ({ certificateImage, title }) => {
 	const [open, setOpen] = useState(false)
 
 	return (
-		<Box component="div" sx={{ width: "100%", height: "100%" }}>
+		<div className="w-full h-full">
 			{/* Card */}
-			<Box
+			<div
 				onClick={() => setOpen(true)}
 				role="button"
 				tabIndex={0}
 				aria-label={title ? `View certificate: ${title}` : "View certificate"}
 				onKeyDown={(e) => e.key === "Enter" && setOpen(true)}
-				sx={{
-					position: "relative",
-					overflow: "hidden",
-					borderRadius: "1rem",
-					border: "1px solid rgba(226, 232, 240, 0.08)",
-					backgroundColor: "rgba(15, 23, 42, 0.6)",
-					boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
-					transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
-					cursor: "pointer",
-					display: "flex",
-					flexDirection: "column",
-					"&:hover": {
-						transform: "translateY(-6px)",
-						boxShadow: "0 16px 32px rgba(99,102,241,0.2)",
-						borderColor: "rgba(99,102,241,0.35)",
-						"& .cert-overlay": { opacity: 1 },
-						"& .cert-img": {
-							transform: "scale(1.04)",
-							filter: "brightness(1.05) saturate(1.1)",
-						},
-					},
-					"&:focus-visible": {
-						outline: "2px solid rgba(99,102,241,0.8)",
-						outlineOffset: "2px",
-					},
-				}}
+				className="relative overflow-hidden rounded-xl border border-slate-200/8 bg-slate-900/60 shadow-lg transition-all duration-300 cursor-pointer flex flex-col hover:translate-y-[-6px] hover:shadow-2xl hover:shadow-indigo-500/20 hover:border-indigo-500/35 group"
 			>
 				{/* Image */}
-				<Box sx={{ position: "relative", width: "100%", paddingTop: "66%", overflow: "hidden", flexShrink: 0 }}>
+				<div className="relative w-full overflow-hidden flex-shrink-0" style={{ paddingTop: "66%" }}>
 					<img
-						className="cert-img"
+						className="absolute inset-0 w-full h-full object-cover transition-all duration-400 group-hover:scale-104 group-hover:brightness-105 group-hover:saturate-110"
 						src={certificateImage}
 						alt={title || "Certificate"}
 						loading="lazy"
-						style={{
-							position: "absolute",
-							inset: 0,
-							width: "100%",
-							height: "100%",
-							objectFit: "cover",
-							transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-						}}
 					/>
 					{/* Hover overlay */}
-					<Box
-						className="cert-overlay"
-						sx={{
-							position: "absolute",
-							inset: 0,
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "center",
-							justifyContent: "center",
-							gap: 1,
-							opacity: 0,
-							transition: "opacity 0.3s ease",
-							backgroundColor: "rgba(3,0,20,0.55)",
-							backdropFilter: "blur(3px)",
-						}}
-					>
-						<FullscreenIcon sx={{ fontSize: 36, color: "#a855f7", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.5))" }} />
-						<span style={{ color: "#fff", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.5px" }}>
-							View Full Size
-						</span>
-					</Box>
-				</Box>
+					<div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-0 transition-opacity duration-300 bg-[#030014]/55 backdrop-blur-sm group-hover:opacity-100">
+						<Maximize2 className="w-9 h-9 text-purple-500" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.5))" }} />
+						<span className="text-white text-xs font-semibold tracking-wide">View Full Size</span>
+					</div>
+				</div>
 
 				{/* Title */}
 				{title && (
-					<Box
-						sx={{
-							px: 2,
-							py: 1.5,
-							borderTop: "1px solid rgba(255,255,255,0.06)",
-							backgroundColor: "rgba(10,10,30,0.5)",
-						}}
-					>
-						<p style={{
-							margin: 0,
-							color: "#cbd5e1",
-							fontSize: "0.78rem",
-							fontWeight: 500,
-							lineHeight: 1.4,
-							display: "-webkit-box",
-							WebkitLineClamp: 2,
-							WebkitBoxOrient: "vertical",
-							overflow: "hidden",
-						}}>
+					<div className="px-4 py-3 border-t border-white/6 bg-slate-950/50">
+						<p className="m-0 text-slate-400 text-xs font-medium leading-relaxed line-clamp-2">
 							{title}
 						</p>
-					</Box>
+					</div>
 				)}
-			</Box>
+			</div>
 
 			{/* Fullscreen Modal */}
-			<Modal
-				open={open}
-				onClose={() => setOpen(false)}
-				sx={{
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "center",
-					p: 2,
-					"& .MuiBackdrop-root": {
-						backgroundColor: "rgba(0,0,0,0.92)",
-						backdropFilter: "blur(10px)",
-					},
-				}}
-			>
-				<Zoom in={open}>
-					<Box
-						sx={{
-							position: "relative",
-							maxWidth: "90vw",
-							maxHeight: "90vh",
-							outline: "none",
-							borderRadius: "1.25rem",
-							overflow: "hidden",
-							boxShadow: "0 24px 64px rgba(99,102,241,0.35)",
-						}}
-					>
-						<IconButton
+			{open && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/92 backdrop-blur-lg">
+					<div className="relative max-w-[90vw] max-h-[90vh] rounded-2xl overflow-hidden shadow-2xl shadow-indigo-500/35">
+						<button
 							onClick={() => setOpen(false)}
 							aria-label="Close"
-							size="large"
-							sx={{
-								position: "absolute",
-								top: 12,
-								right: 12,
-								zIndex: 10,
-								color: "white",
-								bgcolor: "rgba(0,0,0,0.65)",
-								"&:hover": { bgcolor: "rgba(0,0,0,0.85)", transform: "rotate(90deg) scale(1.1)" },
-								transition: "all 0.3s ease",
-							}}
+							className="absolute top-3 right-3 z-10 p-2 text-white bg-black/65 hover:bg-black/85 rounded-lg transition-all duration-300 hover:rotate-90 hover:scale-110"
 						>
-							<CloseIcon sx={{ fontSize: 24 }} />
-						</IconButton>
+							<X className="w-6 h-6" />
+						</button>
 						<img
 							src={certificateImage}
 							alt={title || "Certificate Full View"}
-							style={{ display: "block", maxWidth: "100%", maxHeight: "90vh", objectFit: "contain" }}
+							className="block max-w-full max-h-[90vh] object-contain"
 						/>
-					</Box>
-				</Zoom>
-			</Modal>
-		</Box>
+					</div>
+				</div>
+			)}
+		</div>
 	)
 }
 

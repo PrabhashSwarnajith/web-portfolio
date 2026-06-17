@@ -1,4 +1,8 @@
 // Data for projects section
+import project1 from "../assets/projects/project1.png";
+import booking from "../assets/projects/booking.png";
+import fitfusion from "../assets/projects/fitfusion.png";
+
 const projects = [
     {
       id: 1,
@@ -11,7 +15,7 @@ const projects = [
         "Appointment Management"
       ],
       Github: "https://github.com/PrabhashSwarnajith/appointment-booking-system.git",
-      Img: "/assets/projects/booking.png",
+      Img: booking,
       Link: "",
       TechStack: ["Spring Boot", "React.js", "Tailwind CSS", "MySQL"],
     },
@@ -26,7 +30,7 @@ const projects = [
         "Community Engagement"
       ],
       Github: "https://github.com/PrabhashSwarnajith/FitFusion.git",
-      Img: "/assets/projects/fitfusion.png",
+      Img: fitfusion,
       Link: "",
       TechStack: ["Spring Boot", "React.js", "MongoDB", "Google OAuth2"]
     },
@@ -35,14 +39,14 @@ const projects = [
       Title: "Portfolio Website",
       Description: "A personal portfolio website built with React and Firebase.",
       Features: [
-        "Responsive Design",
+        "Responsive Design", 
         "Firestore Integration"],
       Github: "https://github.com/PrabhashSwarnajith/web-portfolio.git",
-      Img: "/assets/projects/project1.png",
+      Img: project1,
       Link: "",
       TechStack: ["React", "Firebase", "Tailwind CSS"],
     },
-
+       
   ];
   
   export default projects;

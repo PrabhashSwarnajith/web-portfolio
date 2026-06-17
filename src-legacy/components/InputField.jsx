@@ -49,6 +49,7 @@ const InputField = ({ field, label, icon: Icon, formData, handleChange }) => {
         required
         aria-label={label}
       />
+      />
     );
   };
 
