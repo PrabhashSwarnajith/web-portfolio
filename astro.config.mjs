@@ -25,10 +25,6 @@ export default defineConfig({
   vite: {
     ssr: {
       external: ['fsevents'],
-      noExternal: ['@mui/material', '@mui/icons-material']
     },
-    optimizeDeps: {
-      include: ['@mui/material', '@mui/icons-material']
-    }
   }
 });
